@@ -1,15 +1,15 @@
 package com.rashome.rashome.entity;
 
+import com.rashome.rashome.base.Sensor;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
-public class TemperatureSensor {
-    private String rasPiName;
-    private int rasPiID;
-    private String type;
-    private String model;
-    private int id;
-    private float frequency;
-    private float time;
+@AllArgsConstructor
+@NoArgsConstructor
+public class TemperatureSensor extends Sensor {
     private float data;
 }

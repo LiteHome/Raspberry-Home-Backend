@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rashome.rashome.entity.RasberryPi;
+import com.rashome.rashome.utils.BytesConvert;
+import com.rashome.rashome.utils.BytesConvert.*;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

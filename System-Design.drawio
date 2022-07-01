@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-07-01T13:32:33.672Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="LECO4OKk6I9NJjyfF6-u" version="20.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-07-01T13:48:43.186Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="BTgZmA6yMr2fu3Uf6-wy" version="20.0.4" type="github">
   <diagram id="Cht4ok0Wk56tueQbOjkq" name="Page-1">
     <mxGraphModel dx="731" dy="428" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -46,10 +46,10 @@
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-2" value="温度传感器数据 " style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
           <mxGeometry x="10" y="510" width="210" height="270" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-1" value="RasName - String - 树莓派的名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
+        <mxCell id="ZInBEveiPSGArA7NyB_d-1" value="RasPiName - String - 树莓派的名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="30" width="210" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-2" value="RasID - Unsigned Int - 树莓派的 ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
+        <mxCell id="ZInBEveiPSGArA7NyB_d-2" value="RasPiID - Unsigned Int - 树莓派的 ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="60" width="210" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-3" value="Type - String - 传感器类型" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">

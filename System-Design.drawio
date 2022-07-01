@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-30T05:25:51.035Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="89Hn_V68k0DL1I8uoiaK" version="20.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-07-01T13:51:17.336Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="x8gm724yAjNp1JhQt6f8" version="20.0.4" type="github">
   <diagram id="Cht4ok0Wk56tueQbOjkq" name="Page-1">
     <mxGraphModel dx="731" dy="428" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -43,32 +43,35 @@
         <mxCell id="pxeNSs_42EhZOkFYyFny-18" value="功能 - 条件查询&amp;nbsp;&lt;br&gt;&lt;br&gt;0. 展示最新的 10s 内数据 ( 默认 )&lt;br&gt;&lt;br&gt;1. 按时间区间查询&lt;br&gt;&lt;br&gt;2. 按数据 (比如温度区间) 查询" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="900" y="460" width="225" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-2" value="传感器数据 " style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-          <mxGeometry x="10" y="510" width="210" height="240" as="geometry" />
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-2" value="温度传感器数据 " style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="10" y="510" width="210" height="270" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-1" value="RasName - String - 树莓派的名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="8SJZ8MJIFTa2VHCM2vhK-2">
+        <mxCell id="ZInBEveiPSGArA7NyB_d-1" value="RasPiName - String - 树莓派的名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="30" width="210" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-2" value="RasID - Unsigned Int - 树莓派的 ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="8SJZ8MJIFTa2VHCM2vhK-2">
+        <mxCell id="ZInBEveiPSGArA7NyB_d-2" value="RasPiID - Unsigned Int - 树莓派的 ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="60" width="210" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-3" value="Type - String - 传感器类型" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="90" width="210" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-4" value="Model - String - 传感器型号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="8SJZ8MJIFTa2VHCM2vhK-2">
+        <mxCell id="ZInBEveiPSGArA7NyB_d-4" value="Model - String - 传感器型号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="120" width="210" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-4" value="ID - Unsigned Int - 编号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="150" width="210" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-5" value="Time - Float - 时间戳" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-1" value="Frequency - Float - 触发频率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="8SJZ8MJIFTa2VHCM2vhK-2">
           <mxGeometry y="180" width="210" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-6" value="Data - Float - 数据" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-5" value="Time - Float - 时间戳" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
           <mxGeometry y="210" width="210" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-6" value="Data - Float - 数据" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-2" vertex="1">
+          <mxGeometry y="240" width="210" height="30" as="geometry" />
+        </mxCell>
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-7" value="监控数据" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-          <mxGeometry x="10" y="800" width="190" height="210" as="geometry" />
+          <mxGeometry x="10" y="800" width="190" height="240" as="geometry" />
         </mxCell>
         <mxCell id="cNASxXU_QPt22wFQ8tFG-1" value="Name - String - 名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
           <mxGeometry y="30" width="190" height="30" as="geometry" />
@@ -76,20 +79,47 @@
         <mxCell id="8SJZ8MJIFTa2VHCM2vhK-8" value="ID - Unsigned Int - 编号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
           <mxGeometry y="60" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-9" value="Time - Float - 时间戳" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-2" value="Frequency - Float - 触发频率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="8SJZ8MJIFTa2VHCM2vhK-7">
           <mxGeometry y="90" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-11" value="CPU TEM - Float - CPU 温度" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-9" value="Time - Float - 时间戳" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
           <mxGeometry y="120" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-12" value="CPU Usage - Float - CPU 使用率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-11" value="CPU TEM - Float - CPU 温度" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
           <mxGeometry y="150" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-13" value="NET Status - Float - 网络使用率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-12" value="CPU Usage - Float - CPU 使用率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
           <mxGeometry y="180" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ZInBEveiPSGArA7NyB_d-3" value="功能 -&amp;nbsp; 注册树莓派和传感器&lt;br&gt;&lt;br&gt;1. 接收树莓派和所带的传感器信息&lt;br&gt;&lt;br&gt;2. MySQL 保留注册信息" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="8SJZ8MJIFTa2VHCM2vhK-13" value="NET Status - Float - 网络使用率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="8SJZ8MJIFTa2VHCM2vhK-7" vertex="1">
+          <mxGeometry y="210" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZInBEveiPSGArA7NyB_d-3" value="功能 -&amp;nbsp; 注册树莓派和传感器&lt;br&gt;&lt;br&gt;1. 接收树莓派和所带的传感器信息&lt;br&gt;&lt;br&gt;2. MySQL 保留注册信息" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="380" y="800" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-3" value="传感器数据(基类) " style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="1090" width="210" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-4" value="RasPiName - String - 树莓派的名字" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="30" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-5" value="RasPiID - Unsigned Int - 树莓派的 ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="60" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-6" value="Type - String - 传感器类型" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="90" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-7" value="Model - String - 传感器型号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="120" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-8" value="ID - Unsigned Int - 编号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="150" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-9" value="Frequency - Float - 触发频率" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="180" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iH4tQgb9thjOPp_46ZLu-10" value="Time - Float - 时间戳" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="iH4tQgb9thjOPp_46ZLu-3">
+          <mxGeometry y="210" width="210" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

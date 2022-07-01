@@ -15,14 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RasberryPiController {
     
     @PostMapping(value="/heartbeat")
-    public String receiveHeartbeat(@RequestBody RasberryPi ras) {
+    public void receiveHeartbeat(@RequestBody RasberryPi ras) {
         System.out.println(ras.toString());
-        return "roger";
-    }
-    
-    @PostMapping(value = "/test")
-    public String test(String string){
-        System.out.println(string);
-        return "okk";
     }
 }

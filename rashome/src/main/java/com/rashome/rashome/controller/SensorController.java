@@ -1,18 +1,19 @@
 package com.rashome.rashome.controller;
 
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.rashome.rashome.entity.Sensor;
+import com.rashome.rashome.entity.TemperatureSensor;
 
-@Controller
+@RestController
 @RequestMapping(value = "/sensor")
 public class SensorController {
     
-    @PostMapping(value = "/data")
-    public void receiveData(@RequestBody Sensor sensor){
+    @PostMapping(value = "/temperature/data")
+    public void receiveData(@RequestBody TemperatureSensor sensor){
 
         System.out.println(sensor.toString());
     }

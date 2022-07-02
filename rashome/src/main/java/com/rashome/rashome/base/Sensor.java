@@ -10,5 +10,5 @@ public abstract class Sensor {
     private String model;
     private int id;
     private float frequency;
-    private float time;
+    private long time;
 }

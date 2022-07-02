@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rashome.rashome.entity.TemperatureSensor;
+import com.rashome.rashome.utils.TimestampConvert;
 
 @RestController
 @RequestMapping(value = "/sensor")
@@ -16,5 +17,6 @@ public class SensorController {
     public void receiveData(@RequestBody TemperatureSensor sensor){
 
         System.out.println(sensor.toString());
+        System.out.println(TimestampConvert.convertToLocalDate(sensor.getTime()));
     }
 }

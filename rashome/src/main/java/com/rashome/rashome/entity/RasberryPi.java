@@ -13,7 +13,7 @@ public class RasberryPi {
     private String model;
     private long id;
     private float frequency;
-    private float time;
+    private long time;
     private CpuInfo cpuInfo;
     private MemoryInfo memoryInfo;
     private SwapInfo swapInfo;

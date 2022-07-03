@@ -27,7 +27,7 @@ public class RasberryPi {
         private float cpuAverageUsage;
         private List<Float> cpuPerUsage;
         private int cpuLogicCores;
-        private float cpuTEM;
+        private float cpuTemperature;
     }
 
     @Data

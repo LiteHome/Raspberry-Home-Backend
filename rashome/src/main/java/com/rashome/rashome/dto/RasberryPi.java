@@ -1,4 +1,4 @@
-package com.rashome.rashome.entity;
+package com.rashome.rashome.dto;
 
 import java.util.*;
 import lombok.AllArgsConstructor;

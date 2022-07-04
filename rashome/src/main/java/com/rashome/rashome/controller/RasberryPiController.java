@@ -4,7 +4,7 @@ package com.rashome.rashome.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rashome.rashome.entity.RasberryPi;
+import com.rashome.rashome.dto.RasberryPi;
 import com.rashome.rashome.utils.TimestampConvert;
 
 import org.springframework.web.bind.annotation.PostMapping;

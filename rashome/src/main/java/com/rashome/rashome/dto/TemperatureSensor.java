@@ -1,4 +1,4 @@
-package com.rashome.rashome.entity;
+package com.rashome.rashome.dto;
 
 import com.rashome.rashome.base.Sensor;
 

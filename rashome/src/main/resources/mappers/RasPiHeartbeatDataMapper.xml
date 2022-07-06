@@ -27,7 +27,12 @@
     delete from rasPiHeartbeatData
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rashome.rashome.po.RasPiHeartbeatData">
+  <insert id="insert" 
+  parameterType="com.rashome.rashome.po.RasPiHeartbeatData" 
+  useGeneratedKeys="true" 
+  keyColumn="id" 
+  keyProperty="id" 
+  >
     insert into rasPiHeartbeatData (id, `name`, model, 
       rasPiID, frequency, collectTime, 
       cpuAverageUsage, cpuPerUsage, cpuLogicCores, 
@@ -41,7 +46,7 @@
       #{cpuTemperature,jdbcType=REAL}, #{memoryTotal,jdbcType=BIGINT}, #{memoryUsed,jdbcType=BIGINT}, 
       #{memoryFree,jdbcType=BIGINT}, #{memoryPercent,jdbcType=REAL}, #{swapTotal,jdbcType=BIGINT}, 
       #{swapUsed,jdbcType=BIGINT}, #{swapFree,jdbcType=BIGINT}, #{swapPercent,jdbcType=REAL}, 
-      #{latency,jdbcType=REAL}, #{create_time,jdbcType=TIMESTAMP})
+      #{latency,jdbcType=REAL}, DEFAULT)
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.rashome.rashome.po.RasPiHeartbeatData">
     update rasPiHeartbeatData

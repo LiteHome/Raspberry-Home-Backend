@@ -17,7 +17,12 @@
     delete from dht11Data
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rashome.rashome.po.Dht11Data">
+  <insert id="insert" 
+  parameterType="com.rashome.rashome.po.Dht11Data" 
+    useGeneratedKeys="true" 
+  keyColumn="id" 
+  keyProperty="id" 
+  >
     insert into dht11Data (id, rasPiName, rasPiID, 
       sensorType, sensorModel, sensorID, 
       frequency, collectTime, sensorData, 
@@ -25,7 +30,7 @@
     values (#{id,jdbcType=BIGINT}, #{rasPiName,jdbcType=VARCHAR}, #{rasPiID,jdbcType=BIGINT}, 
       #{sensorType,jdbcType=VARCHAR}, #{sensorModel,jdbcType=VARCHAR}, #{sensorID,jdbcType=BIGINT}, 
       #{frequency,jdbcType=REAL}, #{collectTime,jdbcType=BIGINT}, #{sensorData,jdbcType=REAL}, 
-      #{create_time,jdbcType=TIMESTAMP})
+      DEFAULT)
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.rashome.rashome.po.Dht11Data">
     update dht11Data

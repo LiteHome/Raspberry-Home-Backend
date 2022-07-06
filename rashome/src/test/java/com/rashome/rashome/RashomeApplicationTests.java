@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.rashome.rashome.dao.RasPiHeartbeatDataMapper;
+import com.rashome.rashome.dto.RasberryPi;
 import com.rashome.rashome.po.RasPiHeartbeatData;
 
 @SpringBootTest
 @MapperScan(basePackages = "com.rashome.rashome.dao")
 class RashomeApplicationTests {
 
-	
+
 	private RasPiHeartbeatDataMapper rasPiHeartbeatDataMapper;
 
 	@Autowired
@@ -27,9 +28,12 @@ class RashomeApplicationTests {
 	}
 
 	@Test
-	void testDao(){
+	void testDaoSelect(){
 		List<RasPiHeartbeatData> data = rasPiHeartbeatDataMapper.selectAll();
 		System.out.println(data);
 	}
 
+	@Test
+	void testDaoInsert(){
+	}
 }

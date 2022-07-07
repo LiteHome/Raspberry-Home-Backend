@@ -18,7 +18,7 @@ public interface Dht11DataMapper {
 
     List<Dht11Data> selectByRasberryPiIDAndSensorID(
         @Param("rasberryPiID") Long rasberryPiID, 
-        @Param("sensorID")Long sensorID);
+        @Param("sensorsID") List<Long> sensorsID);
 
     int updateByPrimaryKey(Dht11Data record);
 }

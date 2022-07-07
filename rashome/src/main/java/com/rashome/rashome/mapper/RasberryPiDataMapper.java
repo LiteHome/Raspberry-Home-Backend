@@ -12,5 +12,7 @@ public interface RasberryPiDataMapper {
 
     List<RasberryPiData> selectAll();
 
+    List<RasberryPiData> selectByRasberryPiID(Long rasberryPiID);
+
     int updateByPrimaryKey(RasberryPiData record);
 }

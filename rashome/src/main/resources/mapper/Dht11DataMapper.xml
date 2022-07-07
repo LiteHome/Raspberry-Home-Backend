@@ -58,6 +58,9 @@
     select *
     from dht11Data
     where rasberryPiID = #{rasberryPiID, jdbcType=BIGINT} and
-    sensorID = #{sensorID, jdbcType=BIGINT}
+    sensorID in 
+    <foreach collection="sensorsID" open="(" close=")" separator="," item="sensorID">
+      #{sensorID}
+    </foreach>
   </select>
 </mapper>

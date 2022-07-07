@@ -4,8 +4,10 @@ package com.rashome.rashome.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rashome.rashome.dto.QueryRasberryPi;
 import com.rashome.rashome.dto.Topology;
 import com.rashome.rashome.po.RasberryPiData;
+import com.rashome.rashome.service.RasberryPiDataService;
 import com.rashome.rashome.service.TopologyService;
 
 import java.util.List;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RasberryPiController {
 
     private TopologyService topologyService;
+    private RasberryPiDataService rasberryPiDataService;
 
     public RasberryPiController(
-        TopologyService topologyService
+        TopologyService topologyService,
+        RasberryPiDataService rasberryPiDataService
     ){
         this.topologyService = topologyService;
     }
@@ -33,6 +37,10 @@ public class RasberryPiController {
         System.out.println(rasberryPiData.toString());
     }
 
+    @PostMapping(value = "/queryData")
+    public List<RasberryPiData> querData(@RequestBody QueryRasberryPi queryRasberryPi){
+        return this.rasberryPiDataService.queryDataByRasberrPiID(queryRasberryPi);
+    }
 
     @PostMapping(value = "/topology/add")
     public void receiveTopology(@RequestBody Topology topology){
@@ -40,7 +48,7 @@ public class RasberryPiController {
     }
 
     @PostMapping(value = "/topology/query")
-    public ConcurrentHashMap<String, List<Long>> queryTopology(@RequestBody Topology topology){
-        return this.topologyService.queryTopology(topology.getRasberryPiID());
+    public ConcurrentHashMap<String, List<Long>> queryTopology(@RequestBody QueryRasberryPi queryRasberryPi){
+        return this.topologyService.queryTopology(queryRasberryPi.getRasberryPiID());
     }
 }

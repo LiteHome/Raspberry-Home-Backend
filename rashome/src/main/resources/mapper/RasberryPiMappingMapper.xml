@@ -13,14 +13,11 @@
     delete from rasberryPiMapping
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rashome.rashome.po.RasberryPiMapping" 
-  keyProperty="id" 
-  useGenerateKey="true"
-  >
-    insert into rasberryPiMapping (id, rasberryPiID, rasberryPiName, 
+  <insert id="insert" parameterType="com.rashome.rashome.po.RasberryPiMapping">
+    insert into rasberryPiMapping (rasberryPiID, rasberryPiName, 
       createTime, updateTime, rasberryPiModel
       )
-    values (#{id,jdbcType=BIGINT}, #{rasberryPiID,jdbcType=BIGINT}, #{rasberryPiName,jdbcType=VARCHAR}, 
+    values (#{rasberryPiID,jdbcType=BIGINT}, #{rasberryPiName,jdbcType=VARCHAR}, 
       DEFAULT, DEFAULT, #{rasberryPiModel,jdbcType=BIGINT}
       )
   </insert>

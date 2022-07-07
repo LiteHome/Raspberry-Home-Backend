@@ -12,13 +12,10 @@
     delete from sensorMapping
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rashome.rashome.po.SensorMapping" 
-  keyProperty="id" 
-  useGenerateKey="true"
-  >
-    insert into sensorMapping (id, sensorModel, createTime, 
+  <insert id="insert" parameterType="com.rashome.rashome.po.SensorMapping">
+    insert into sensorMapping (sensorModel, createTime, 
       updateTime, sensorType)
-    values (#{id,jdbcType=BIGINT}, #{sensorModel,jdbcType=VARCHAR}, DEFAULT, 
+    values (#{sensorModel,jdbcType=VARCHAR}, DEFAULT, 
       DEFAULT, #{sensorType,jdbcType=VARCHAR})
   </insert>
 

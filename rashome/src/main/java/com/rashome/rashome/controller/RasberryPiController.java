@@ -29,6 +29,7 @@ public class RasberryPiController {
         RasberryPiDataService rasberryPiDataService
     ){
         this.topologyService = topologyService;
+        this.rasberryPiDataService = rasberryPiDataService;
     }
     
     @PostMapping(value="/data")

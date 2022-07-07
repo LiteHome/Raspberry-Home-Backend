@@ -25,19 +25,16 @@
     delete from rasberryPiData
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" 
-  parameterType="com.rashome.rashome.po.RasberryPiData" 
-  keyProperty="id" 
-  useGenerateKey="true" 
-  >
-    insert into rasberryPiData (id, rasberryPiID, frequency, 
+
+  <insert id="insert" parameterType="com.rashome.rashome.po.RasberryPiData">
+    insert into rasberryPiData (rasberryPiID, frequency, 
       collectTime, cpuAverageUsage, cpuPerUsage, 
       cpuLogicCores, cpuTemperature, memoryTotal, 
       memoryUsed, memoryFree, memoryPercent, 
       swapTotal, swapUsed, swapFree, 
       swapPercent, latency, createTime
       )
-    values (#{id,jdbcType=BIGINT}, #{rasberryPiID,jdbcType=BIGINT}, #{frequency,jdbcType=REAL}, 
+    values (#{rasberryPiID,jdbcType=BIGINT}, #{frequency,jdbcType=REAL}, 
       #{collectTime,jdbcType=BIGINT}, #{cpuAverageUsage,jdbcType=REAL}, #{cpuPerUsage,jdbcType=VARCHAR}, 
       #{cpuLogicCores,jdbcType=INTEGER}, #{cpuTemperature,jdbcType=REAL}, #{memoryTotal,jdbcType=BIGINT}, 
       #{memoryUsed,jdbcType=BIGINT}, #{memoryFree,jdbcType=BIGINT}, #{memoryPercent,jdbcType=REAL}, 
@@ -45,6 +42,7 @@
       #{swapPercent,jdbcType=REAL}, #{latency,jdbcType=REAL}, DEFAULT
       )
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.rashome.rashome.po.RasberryPiData">
     update rasberryPiData
     set rasberryPiID = #{rasberryPiID,jdbcType=BIGINT},

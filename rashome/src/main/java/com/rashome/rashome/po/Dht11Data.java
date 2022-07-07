@@ -19,7 +19,9 @@ public class Dht11Data {
 
     private Long collectTime;
 
-    private Float sensorData;
+    private Float sensorTemperature;
+
+    private Float sensorHumidity;
 
     private Date createTime;
 }

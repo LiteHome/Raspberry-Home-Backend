@@ -7,7 +7,8 @@
     <result column="sensorID" jdbcType="BIGINT" property="sensorID" />
     <result column="frequency" jdbcType="REAL" property="frequency" />
     <result column="collectTime" jdbcType="BIGINT" property="collectTime" />
-    <result column="sensorData" jdbcType="REAL" property="sensorData" />
+    <result column="sensorTemperature" jdbcType="REAL" property="sensorTemperature" />
+    <result column="sensorHumidity" jdbcType="REAL" property="sensorHumidity" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
 
@@ -18,11 +19,11 @@
 
   <insert id="insert" parameterType="com.rashome.rashome.po.Dht11Data">
     insert into dht11Data (rasberryPiID, sensorID, 
-      frequency, collectTime, sensorData, 
+      frequency, collectTime, sensorTemperature, sensorHumidity,
       createTime)
     values (#{rasberryPiID,jdbcType=BIGINT}, #{sensorID,jdbcType=BIGINT}, 
-      #{frequency,jdbcType=REAL}, #{collectTime,jdbcType=BIGINT}, #{sensorData,jdbcType=REAL}, 
-      DEFAULT})
+      #{frequency,jdbcType=REAL}, #{collectTime,jdbcType=BIGINT}, #{sensorTemperature,jdbcType=REAL},
+      #{sensorHumidity,jdbcType=REAL}, DEFAULT)
   </insert>
 
 
@@ -32,19 +33,22 @@
       sensorID = #{sensorID,jdbcType=BIGINT},
       frequency = #{frequency,jdbcType=REAL},
       collectTime = #{collectTime,jdbcType=BIGINT},
-      sensorData = #{sensorData,jdbcType=REAL},
+      sensorTemperature = #{sensorTemperature,jdbcType=REAL},
+      sensorHumidity = #{sensorHumidity,jdbcType=REAL},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
+    select id, rasberryPiID, sensorID, frequency, collectTime, 
+    sensorTemperature, sensorHumidity, createTime
     from dht11Data
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
+    select id, rasberryPiID, sensorID, frequency, collectTime, sensorTemperature, sensorHumidity,
+    createTime
     from dht11Data
   </select>
 

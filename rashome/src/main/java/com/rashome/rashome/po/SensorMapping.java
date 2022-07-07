@@ -8,18 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dht11Data {
+public class SensorMapping {
     private Long id;
 
-    private Long rasberryPiID;
-
-    private Long sensorID;
-
-    private Float frequency;
-
-    private Long collectTime;
-
-    private Float sensorData;
+    private String sensorModel;
 
     private Date createTime;
+
+    private Date updateTime;
+
+    private String sensorType;
 }

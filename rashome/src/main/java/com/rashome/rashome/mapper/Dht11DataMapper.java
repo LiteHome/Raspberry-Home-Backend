@@ -1,4 +1,4 @@
-package com.rashome.rashome.dao;
+package com.rashome.rashome.mapper;
 
 import com.rashome.rashome.po.Dht11Data;
 import java.util.List;

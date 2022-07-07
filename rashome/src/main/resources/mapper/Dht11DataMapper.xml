@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rashome.rashome.dao.Dht11DataMapper">
+<mapper namespace="com.rashome.rashome.mapper.Dht11DataMapper">
   <resultMap id="BaseResultMap" type="com.rashome.rashome.po.Dht11Data">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="rasPiName" jdbcType="VARCHAR" property="rasPiName" />
-    <result column="rasPiID" jdbcType="BIGINT" property="rasPiID" />
-    <result column="sensorType" jdbcType="VARCHAR" property="sensorType" />
-    <result column="sensorModel" jdbcType="VARCHAR" property="sensorModel" />
+    <result column="rasberryPiID" jdbcType="BIGINT" property="rasberryPiID" />
     <result column="sensorID" jdbcType="BIGINT" property="sensorID" />
     <result column="frequency" jdbcType="REAL" property="frequency" />
     <result column="collectTime" jdbcType="BIGINT" property="collectTime" />
     <result column="sensorData" jdbcType="REAL" property="sensorData" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from dht11Data
@@ -19,41 +16,33 @@
   </delete>
   <insert id="insert" 
   parameterType="com.rashome.rashome.po.Dht11Data" 
-    useGeneratedKeys="true" 
-  keyColumn="id" 
   keyProperty="id" 
+  useGenerateKey="true" 
   >
-    insert into dht11Data (id, rasPiName, rasPiID, 
-      sensorType, sensorModel, sensorID, 
+    insert into dht11Data (id, rasberryPiID, sensorID, 
       frequency, collectTime, sensorData, 
-      create_time)
-    values (#{id,jdbcType=BIGINT}, #{rasPiName,jdbcType=VARCHAR}, #{rasPiID,jdbcType=BIGINT}, 
-      #{sensorType,jdbcType=VARCHAR}, #{sensorModel,jdbcType=VARCHAR}, #{sensorID,jdbcType=BIGINT}, 
+      createTime)
+    values (#{id,jdbcType=BIGINT}, #{rasberryPiID,jdbcType=BIGINT}, #{sensorID,jdbcType=BIGINT}, 
       #{frequency,jdbcType=REAL}, #{collectTime,jdbcType=BIGINT}, #{sensorData,jdbcType=REAL}, 
-      DEFAULT)
+      DEFAULT})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.rashome.rashome.po.Dht11Data">
     update dht11Data
-    set rasPiName = #{rasPiName,jdbcType=VARCHAR},
-      rasPiID = #{rasPiID,jdbcType=BIGINT},
-      sensorType = #{sensorType,jdbcType=VARCHAR},
-      sensorModel = #{sensorModel,jdbcType=VARCHAR},
+    set rasberryPiID = #{rasberryPiID,jdbcType=BIGINT},
       sensorID = #{sensorID,jdbcType=BIGINT},
       frequency = #{frequency,jdbcType=REAL},
       collectTime = #{collectTime,jdbcType=BIGINT},
       sensorData = #{sensorData,jdbcType=REAL},
-      create_time = #{create_time,jdbcType=TIMESTAMP}
+      createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, rasPiName, rasPiID, sensorType, sensorModel, sensorID, frequency, collectTime, 
-    sensorData, create_time
+    select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
     from dht11Data
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, rasPiName, rasPiID, sensorType, sensorModel, sensorID, frequency, collectTime, 
-    sensorData, create_time
+    select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
     from dht11Data
   </select>
 </mapper>

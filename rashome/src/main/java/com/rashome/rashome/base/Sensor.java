@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public abstract class Sensor {
     private String rasPiName;
-    private int rasPiID;
+    private long rasPiID;
     private String type;
     private String model;
-    private int id;
+    private long id;
     private float frequency;
     private long time;
 }

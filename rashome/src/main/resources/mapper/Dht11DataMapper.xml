@@ -36,13 +36,28 @@
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
     from dht11Data
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
     select id, rasberryPiID, sensorID, frequency, collectTime, sensorData, createTime
     from dht11Data
+  </select>
+
+  <select id="selectByRasberryPiID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select *
+    from dht11Data
+    where rasberryPiID = #{rasberryPiID, jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByRasberryPiIDAndSensorID" resultMap="BaseResultMap">
+    select *
+    from dht11Data
+    where rasberryPiID = #{rasberryPiID, jdbcType=BIGINT} and
+    sensorID = #{sensorID, jdbcType=BIGINT}
   </select>
 </mapper>

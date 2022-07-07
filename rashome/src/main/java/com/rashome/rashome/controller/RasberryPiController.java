@@ -8,6 +8,9 @@ import com.rashome.rashome.dto.Topology;
 import com.rashome.rashome.po.RasberryPiData;
 import com.rashome.rashome.service.TopologyService;
 
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,9 +33,14 @@ public class RasberryPiController {
         System.out.println(rasberryPiData.toString());
     }
 
+
     @PostMapping(value = "/topology/add")
     public void receiveTopology(@RequestBody Topology topology){
         this.topologyService.addTopologyInfo(topology);
-        System.out.println(this.topologyService.queryTopology(topology.getRasberryPiID()));
+    }
+
+    @PostMapping(value = "/topology/query")
+    public ConcurrentHashMap<String, List<Long>> queryTopology(@RequestBody Topology topology){
+        return this.topologyService.queryTopology(topology.getRasberryPiID());
     }
 }

@@ -26,7 +26,7 @@ public class Dht11Controller {
 
     @PostMapping(value = "/data")
     public void receiveData(@RequestBody Dht11Data dht11Data){
-        System.out.println(dht11Data.toString());
+        this.dht11DataService.addRecord(dht11Data);
     }
 
     @PostMapping(value = "/queryData")

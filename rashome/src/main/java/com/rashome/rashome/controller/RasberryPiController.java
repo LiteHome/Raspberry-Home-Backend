@@ -33,8 +33,7 @@ public class RasberryPiController {
     
     @PostMapping(value="/data")
     public void receiveData(@RequestBody RasberryPiData rasberryPiData) {
-
-        System.out.println(rasberryPiData.toString());
+        this.rasberryPiDataService.addRecord(rasberryPiData);
     }
 
     @PostMapping(value = "/queryData")

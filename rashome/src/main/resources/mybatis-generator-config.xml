@@ -57,7 +57,7 @@
                              targetPackage="com.rashome.rashome.mapper"
                              type="XMLMAPPER"/>
         
-        <table tableName="ras-home.rasberryPiData" 
+        <!-- <table tableName="ras-home.rasberryPiData" 
             domainObjectName="RasberryPiData">
             <property name="useActualColumnNames" value="true"/>
         </table>
@@ -74,6 +74,10 @@
 
         <table tableName="ras-home.sensorMapping" 
             domainObjectName="SensorMapping">
+            <property name="useActualColumnNames" value="true"/>
+        </table> -->
+        <table tableName="ras-home.cameraData"
+            domainObjectName="CameraData">
             <property name="useActualColumnNames" value="true"/>
         </table>
     </context>

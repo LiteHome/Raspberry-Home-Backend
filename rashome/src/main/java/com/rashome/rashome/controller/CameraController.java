@@ -4,47 +4,59 @@ import java.io.IOException;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.github.sardine.impl.SardineException;
 import com.rashome.rashome.dto.CameraInfo;
-import com.rashome.rashome.utils.BytesConvert;
+import com.rashome.rashome.po.CameraData;
+import com.rashome.rashome.service.CameraDataService;
+import com.rashome.rashome.service.NextcloudService;
 import com.rashome.rashome.utils.CommonConvert;
+import com.rashome.rashome.utils.TimestampConvert;
 
 @RestController
 @RequestMapping(value = "/sensors/camera")
 public class CameraController {
 
-    @PostMapping(value = "/data")
-    public void uploadImage(MultipartFile[] files) throws JsonMappingException, JsonProcessingException, IOException{
+    private NextcloudService nextcloudService;
+    private CameraDataService cameraDataService;
 
-            // System.out.println(files.getSize());
-
-        for (MultipartFile file : files){
-
-            String name = file.getOriginalFilename();
-
-            if ("image".equals(name)) {
-                System.out.println(name + ":" + BytesConvert.convertToKB(file.getSize()) + " KB");
-            }else if ("json".equals(name)) {
-
-                CameraInfo cameraInfo = CommonConvert.multipartJsonFileToObject(file, CameraInfo.class);
-                System.out.println(cameraInfo.toString());
-            }
-        }
+    public CameraController(
+        NextcloudService nextcloudService,
+        CameraDataService cameraDataService) {
+            this.nextcloudService = nextcloudService;
+            this.cameraDataService = cameraDataService;
     }
 
-    @PostMapping(value = "/datatest")
-    public void uploadImageTest(
-        @RequestParam(value = "files") MultipartFile[] files, 
-        @RequestParam(value = "cameraInfo") String cameraInfo){
+    @PostMapping(value = "/data")
+    public void uploadImage(MultipartFile[] files) 
+    throws JsonMappingException, JsonProcessingException, IOException, SardineException{
 
-        for (MultipartFile file : files){
-            System.out.println(file.getOriginalFilename());
-        }
-        System.out.println(cameraInfo);
+        CameraInfo cameraInfo = CommonConvert.multipartJsonFileToObject(files[1], CameraInfo.class);
+
+        var foldersName = new String[]{
+            Long.toString(cameraInfo.getRasberryPiID()), 
+            Long.toString(cameraInfo.getSensorID()),
+            TimestampConvert.timestampToYear(cameraInfo.getCollectTime()),
+            TimestampConvert.timestampToMonthOfYear(cameraInfo.getCollectTime()),
+            TimestampConvert.timestampToDayOfYear(cameraInfo.getCollectTime())
+        };
+
+        var fileName = TimestampConvert.timestampToSecondOfYear(cameraInfo.getCollectTime()) + ".jpeg";
+
+        var cameraData = new CameraData(cameraInfo);
+
+        cameraData.setImageUrl(this.nextcloudService.appendFileUrl(foldersName, fileName));
+
+        nextcloudService.uploadFile(
+            foldersName,
+            fileName, 
+            files[0].getBytes()
+            );
+
+        cameraDataService.addRecord(cameraData);
     }
 }

@@ -1,7 +1,6 @@
 package com.rashome.rashome;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.github.sardine.DavResource;
 import com.github.sardine.impl.SardineException;
 import com.rashome.rashome.service.NextcloudService;
 

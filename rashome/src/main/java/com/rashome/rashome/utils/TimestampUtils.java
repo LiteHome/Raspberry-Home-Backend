@@ -1,9 +1,12 @@
 package com.rashome.rashome.utils;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TimestampConvert {
+public class TimestampUtils {
 
     private static DateTimeFormatter yearFormatterOnly = DateTimeFormatter.ofPattern("yyyy");
     private static DateTimeFormatter monthOnlyFormatter = DateTimeFormatter.ofPattern("MM");
@@ -31,5 +34,10 @@ public class TimestampConvert {
 
     public static String timestampToSecondOfYear(long timestamp) {
         return convertToLocalDate(timestamp).format(hmsOnlyFormatter);
+    }
+
+    public static int diffInMinutes(long timestamp) {
+        var currentTimestamp = ZonedDateTime.now().toInstant().toEpochMilli();
+        return Math.round((currentTimestamp - timestamp) / (1000 * 60));
     }
 }

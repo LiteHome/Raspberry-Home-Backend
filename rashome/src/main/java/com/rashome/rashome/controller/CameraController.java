@@ -15,7 +15,7 @@ import com.rashome.rashome.po.CameraData;
 import com.rashome.rashome.service.CameraDataService;
 import com.rashome.rashome.service.NextcloudService;
 import com.rashome.rashome.utils.CommonConvert;
-import com.rashome.rashome.utils.TimestampConvert;
+import com.rashome.rashome.utils.TimestampUtils;
 
 @RestController
 @RequestMapping(value = "/sensors/camera")
@@ -40,12 +40,12 @@ public class CameraController {
         var foldersName = new String[]{
             Long.toString(cameraInfo.getRasberryPiID()), 
             Long.toString(cameraInfo.getSensorID()),
-            TimestampConvert.timestampToYear(cameraInfo.getCollectTime()),
-            TimestampConvert.timestampToMonthOfYear(cameraInfo.getCollectTime()),
-            TimestampConvert.timestampToDayOfYear(cameraInfo.getCollectTime())
+            TimestampUtils.timestampToYear(cameraInfo.getCollectTime()),
+            TimestampUtils.timestampToMonthOfYear(cameraInfo.getCollectTime()),
+            TimestampUtils.timestampToDayOfYear(cameraInfo.getCollectTime())
         };
 
-        var fileName = TimestampConvert.timestampToSecondOfYear(cameraInfo.getCollectTime()) + ".jpeg";
+        var fileName = TimestampUtils.timestampToSecondOfYear(cameraInfo.getCollectTime()) + ".jpeg";
 
         var cameraData = new CameraData(cameraInfo);
 

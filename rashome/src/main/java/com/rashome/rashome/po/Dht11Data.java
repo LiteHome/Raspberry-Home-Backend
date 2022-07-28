@@ -17,6 +17,7 @@ public class Dht11Data {
 
     private Float frequency;
 
+    // in ms
     private Long collectTime;
 
     private Float sensorTemperature;
@@ -24,4 +25,9 @@ public class Dht11Data {
     private Float sensorHumidity;
 
     private Date createTime;
+
+    public Dht11Data(long rasberryPiID, long sensorID){
+        this.rasberryPiID = rasberryPiID;
+        this.sensorID = sensorID;
+    }
 }

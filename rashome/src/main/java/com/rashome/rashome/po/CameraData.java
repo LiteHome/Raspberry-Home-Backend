@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class CameraData {
     private Long id;
 
-    private Long rasPiID;
+    private Long rasberryPiID;
 
     private Long sensorID;
 
@@ -31,7 +31,7 @@ public class CameraData {
     private Date update_time;
 
     public CameraData(CameraInfo cameraInfo){
-        this.rasPiID = cameraInfo.getRasberryPiID();
+        this.rasberryPiID = cameraInfo.getRasberryPiID();
         this.sensorID = cameraInfo.getSensorID();
         this.frequency = cameraInfo.getFrequency();
         this.collectTime = cameraInfo.getCollectTime();

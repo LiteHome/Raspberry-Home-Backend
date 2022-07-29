@@ -4,6 +4,7 @@ package com.rashome.rashome.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rashome.rashome.cache.JustOneCache;
 import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.dto.Topology;
 import com.rashome.rashome.po.RasberryPiData;
@@ -23,6 +24,7 @@ public class RasberryPiController {
 
     private TopologyService topologyService;
     private RasberryPiDataService rasberryPiDataService;
+    private JustOneCache<RasberryPiData> cache;
 
     public RasberryPiController(
         TopologyService topologyService,
@@ -30,16 +32,34 @@ public class RasberryPiController {
     ){
         this.topologyService = topologyService;
         this.rasberryPiDataService = rasberryPiDataService;
+        this.cache = new JustOneCache<>();
     }
     
     @PostMapping(value="/data")
     public void receiveData(@RequestBody RasberryPiData rasberryPiData) {
+        this.cache.putItem(rasberryPiData, rasberryPiData.getRasberryPiID(), null);
         this.rasberryPiDataService.addRecord(rasberryPiData);
     }
 
     @PostMapping(value = "/queryData")
     public List<RasberryPiData> querData(@RequestBody QueryData queryData){
         return this.rasberryPiDataService.queryDataByRasberrPiID(queryData);
+    }
+
+    @PostMapping(value = "/queryHistoryData")
+    public List<RasberryPiData> querHistoryData(@RequestBody QueryData queryData){
+        return this.rasberryPiDataService.queryDataByTimestamp(queryData);
+    }
+
+    @PostMapping(value = "/queryRealTimeData")
+    public RasberryPiData querRealTimeData(@RequestBody QueryData queryData){
+        
+        var item = this.cache.getItem(queryData.getRasberryPiID(), null);
+        if (item == null) {
+            return new RasberryPiData();
+        }else{
+            return item;
+        }
     }
 
     @PostMapping(value = "/topology/add")

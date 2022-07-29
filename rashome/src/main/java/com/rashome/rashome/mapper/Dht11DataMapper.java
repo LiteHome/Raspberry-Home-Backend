@@ -4,8 +4,6 @@ import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.po.Dht11Data;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 public interface Dht11DataMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -15,15 +13,11 @@ public interface Dht11DataMapper {
 
     List<Dht11Data> selectAll();
 
-    List<Dht11Data> selectByRasberryPiID(@Param("queryData") QueryData queryData);
+    List<Dht11Data> selectByRasberryPiID(QueryData queryData);
 
-    List<Dht11Data> selectByRasberryPiIDAndSensorID(
-        @Param("queryData") QueryData queryData
-    );
+    List<Dht11Data> selectByRasberryPiIDAndSensorID(QueryData queryData);
 
-    List<Dht11Data> selectByTimestamp(
-        @Param("queryData") QueryData queryData
-    );
+    List<Dht11Data> selectByTimestamp(QueryData queryData);
 
     int updateByPrimaryKey(Dht11Data record);
 }

@@ -42,18 +42,18 @@ public class Dht11Controller {
 
 
     @PostMapping(value = "/queryRealTimeData")
-    public List<Dht11Data> queryRealTimeData(@RequestBody QueryData querySensorData) {
+    public List<Dht11Data> queryRealTimeData(@RequestBody QueryData queryData) {
 
         var addNullDht11Data = true;
 
-        var sensorsID = querySensorData.getSensorsID();
+        var sensorsID = queryData.getSensorsID();
 
         var result = new ArrayList<Dht11Data>(sensorsID.size());
 
         for (long sensorID : sensorsID) {
             
             var item = this.cache.getItem(
-                querySensorData.getRasberryPiID(),
+                queryData.getRasberryPiID(),
                 sensorID
             );
     
@@ -66,7 +66,7 @@ public class Dht11Controller {
 
             // process with item == null and item expire
             if (addNullDht11Data) {
-                result.add(new Dht11Data(querySensorData.getRasberryPiID(), sensorID));
+                result.add(new Dht11Data(queryData.getRasberryPiID(), sensorID));
             }
         }
 
@@ -74,12 +74,13 @@ public class Dht11Controller {
     }
 
     @PostMapping(value = "/queryHistoryData")
-    public List<Dht11Data> queryHistoryData(@RequestBody QueryData querySensorData){
-        return this.dht11DataService.queryDataByRasberryIDAndSensorID(querySensorData);
+    public List<Dht11Data> queryHistoryData(@RequestBody QueryData queryData){
+        System.out.println(queryData.toString());
+        return this.dht11DataService.queryDataByTimestamp(queryData);
     }
 
     @PostMapping(value = "/queryData")
-    public List<Dht11Data> queryData(@RequestBody QueryData querySensorData){
-        return this.dht11DataService.queryDataByRasberryIDAndSensorID(querySensorData);
+    public List<Dht11Data> queryData(@RequestBody QueryData queryData){
+        return this.dht11DataService.queryDataByRasberryIDAndSensorID(queryData);
     }
 }

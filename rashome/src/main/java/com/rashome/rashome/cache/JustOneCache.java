@@ -14,6 +14,9 @@ public class JustOneCache<T> {
     public T getItem(Long rasberryPiID, Long sensorID) {
 
         var key = rasberryPiID + ":" + sensorID;
+        if (sensorID == null) {
+            key = String.valueOf(rasberryPiID);
+        }
 
         if (!cacheMap.contains(key)) {
             cacheMap.put(key, new ConcurrentLinkedQueue<T>());
@@ -26,6 +29,9 @@ public class JustOneCache<T> {
     public void putItem(T item, Long rasberryPiID, Long sensorID){
 
         var key = rasberryPiID + ":" + sensorID;
+        if (sensorID == null) {
+            key = String.valueOf(rasberryPiID);
+        }
 
         if (!this.cacheMap.containsKey(key)) {
             cacheMap.put(key, new ConcurrentLinkedQueue<T>());

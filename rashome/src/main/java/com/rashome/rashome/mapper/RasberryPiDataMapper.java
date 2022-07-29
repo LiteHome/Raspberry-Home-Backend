@@ -4,8 +4,6 @@ import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.po.RasberryPiData;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 public interface RasberryPiDataMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -15,9 +13,9 @@ public interface RasberryPiDataMapper {
 
     List<RasberryPiData> selectAll();
 
-    List<RasberryPiData> selectByRasberryPiID(@Param("queryData") QueryData queryData);
+    List<RasberryPiData> selectByRasberryPiID(QueryData queryData);
 
-    List<RasberryPiData> selectByTimestamp(@Param("queryData") QueryData queryData);
+    List<RasberryPiData> selectByTimestamp(QueryData queryData);
 
     int updateByPrimaryKey(RasberryPiData record);
 }

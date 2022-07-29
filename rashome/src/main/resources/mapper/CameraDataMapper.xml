@@ -3,7 +3,7 @@
 <mapper namespace="com.rashome.rashome.mapper.CameraDataMapper">
   <resultMap id="BaseResultMap" type="com.rashome.rashome.po.CameraData">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="rasPiID" jdbcType="BIGINT" property="rasPiID" />
+    <result column="rasberryPiID" jdbcType="BIGINT" property="rasberryPiID" />
     <result column="sensorID" jdbcType="BIGINT" property="sensorID" />
     <result column="frequency" jdbcType="REAL" property="frequency" />
     <result column="collectTime" jdbcType="BIGINT" property="collectTime" />
@@ -12,23 +12,26 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
     <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from cameraData
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.rashome.rashome.po.CameraData">
-    insert into cameraData (rasPiID, sensorID,
+    insert into cameraData (rasberryPiID, sensorID,
       frequency, collectTime, imageUrl, 
       isProcess, create_time, update_time
       )
-    values (#{rasPiID,jdbcType=BIGINT}, #{sensorID,jdbcType=BIGINT}, 
+    values (#{rasberryPiID,jdbcType=BIGINT}, #{sensorID,jdbcType=BIGINT}, 
       #{frequency,jdbcType=REAL}, #{collectTime,jdbcType=BIGINT}, #{imageUrl,jdbcType=VARCHAR}, 
       DEFAULT, DEFAULT, DEFAULT
       )
   </insert>
+
   <update id="updateByPrimaryKey" parameterType="com.rashome.rashome.po.CameraData">
     update cameraData
-    set rasPiID = #{rasPiID,jdbcType=BIGINT},
+    set rasberryPiID = #{rasberryPiID,jdbcType=BIGINT},
       sensorID = #{sensorID,jdbcType=BIGINT},
       frequency = #{frequency,jdbcType=REAL},
       collectTime = #{collectTime,jdbcType=BIGINT},
@@ -38,19 +41,22 @@
       update_time = #{update_time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
   <update id="updateByURL" parameterType="com.rashome.rashome.po.CameraData">
     update cameraData
     set isProcess=1
     where imageUrl= #{imageUrl,jdbcType=VARCHAR}
   </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, rasPiID, sensorID, frequency, collectTime, imageUrl, isProcess, create_time, 
+    select id, rasberryPiID, sensorID, frequency, collectTime, imageUrl, isProcess, create_time, 
     update_time
     from cameraData
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, rasPiID, sensorID, frequency, collectTime, imageUrl, isProcess, create_time, 
+    select id, rasberryPiID, sensorID, frequency, collectTime, imageUrl, isProcess, create_time, 
     update_time
     from cameraData
   </select>

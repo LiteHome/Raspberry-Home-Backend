@@ -17,6 +17,7 @@ public class QueryData {
     // set both rasid and sensorid = query sensor data
     private List<Long> sensorsID;
 
+    // if no timestamp is set = query realtime data
     private long startTimestamp;
     private long endTimestamp;
 }

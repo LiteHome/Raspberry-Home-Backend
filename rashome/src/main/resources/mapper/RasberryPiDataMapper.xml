@@ -85,4 +85,10 @@
     swapFree, swapPercent, latency, createTime
     from rasberryPiData
   </select>
+
+  <select id="selectByTimestamp" parameterType="com.rashome.rashome.dto.QueryData" resultMap="BaseResultMap">
+    select *
+    from rasberryPiData
+    where collectTime >= #{startTimestamp, jdbcType=BIGINT} and collectTime <= #{endTimestamp, jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -52,19 +52,25 @@
     from dht11Data
   </select>
 
-  <select id="selectByRasberryPiID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByRasberryPiID" parameterType="com.rashome.rashome.dto.QueryData" resultMap="BaseResultMap">
     select *
     from dht11Data
     where rasberryPiID = #{rasberryPiID, jdbcType=BIGINT}
   </select>
 
-  <select id="selectByRasberryPiIDAndSensorID" resultMap="BaseResultMap">
+  <select id="selectByRasberryPiIDAndSensorID" parameterType="com.rashome.rashome.dto.QueryData" resultMap="BaseResultMap">
     select *
     from dht11Data
     where rasberryPiID = #{rasberryPiID, jdbcType=BIGINT} and
     sensorID in 
     <foreach collection="sensorsID" open="(" close=")" separator="," item="sensorID">
-      #{sensorID}
+      #{sensorID, jdbcType=BIGINT}
     </foreach>
+  </select>
+
+  <select id="selectByTimestamp" parameterType="com.rashome.rashome.dto.QueryData" resultMap="BaseResultMap">
+    select *
+    from dht11Data
+    where collectTime >= #{startTimestamp, jdbcType=BIGINT} and collectTime <= #{endTimestamp, jdbcType=BIGINT}
   </select>
 </mapper>

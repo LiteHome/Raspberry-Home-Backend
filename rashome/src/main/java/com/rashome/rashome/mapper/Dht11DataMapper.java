@@ -1,5 +1,6 @@
 package com.rashome.rashome.mapper;
 
+import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.po.Dht11Data;
 import java.util.List;
 
@@ -14,11 +15,15 @@ public interface Dht11DataMapper {
 
     List<Dht11Data> selectAll();
 
-    List<Dht11Data> selectByRasberryPiID(Long rasberryPiID);
+    List<Dht11Data> selectByRasberryPiID(@Param("queryData") QueryData queryData);
 
     List<Dht11Data> selectByRasberryPiIDAndSensorID(
-        @Param("rasberryPiID") Long rasberryPiID, 
-        @Param("sensorsID") List<Long> sensorsID);
+        @Param("queryData") QueryData queryData
+    );
+
+    List<Dht11Data> selectByTimestamp(
+        @Param("queryData") QueryData queryData
+    );
 
     int updateByPrimaryKey(Dht11Data record);
 }

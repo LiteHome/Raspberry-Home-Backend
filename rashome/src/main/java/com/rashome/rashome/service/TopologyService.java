@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
+import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.dto.Topology;
 
 @Service
@@ -27,7 +28,7 @@ public class TopologyService {
         result.put(topology.getRasberryPiID(), tmp);
     }
 
-    public ConcurrentHashMap<String, List<Long>> queryTopology(Long rasberryPiID){
-        return result.get(rasberryPiID);
+    public ConcurrentHashMap<String, List<Long>> queryTopology(QueryData queryData){
+        return result.get(queryData.getRasberryPiID());
     }
 }

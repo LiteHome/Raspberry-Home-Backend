@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rashome.rashome.cache.JustOneCache;
-import com.rashome.rashome.dto.QuerySensorData;
+import com.rashome.rashome.dto.QueryData;
 import com.rashome.rashome.po.Dht11Data;
 import com.rashome.rashome.service.Dht11DataService;
 import com.rashome.rashome.utils.TimestampUtils;
@@ -42,7 +42,7 @@ public class Dht11Controller {
 
 
     @PostMapping(value = "/queryRealTimeData")
-    public List<Dht11Data> queryRealTimeData(@RequestBody QuerySensorData querySensorData) {
+    public List<Dht11Data> queryRealTimeData(@RequestBody QueryData querySensorData) {
 
         var addNullDht11Data = true;
 
@@ -51,6 +51,7 @@ public class Dht11Controller {
         var result = new ArrayList<Dht11Data>(sensorsID.size());
 
         for (long sensorID : sensorsID) {
+            
             var item = this.cache.getItem(
                 querySensorData.getRasberryPiID(),
                 sensorID
@@ -72,8 +73,13 @@ public class Dht11Controller {
         return result;
     }
 
+    @PostMapping(value = "/queryHistoryData")
+    public List<Dht11Data> queryHistoryData(@RequestBody QueryData querySensorData){
+        return this.dht11DataService.queryDataByRasberryIDAndSensorID(querySensorData);
+    }
+
     @PostMapping(value = "/queryData")
-    public List<Dht11Data> queryData(@RequestBody QuerySensorData querySensorData){
+    public List<Dht11Data> queryData(@RequestBody QueryData querySensorData){
         return this.dht11DataService.queryDataByRasberryIDAndSensorID(querySensorData);
     }
 }

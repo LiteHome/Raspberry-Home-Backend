@@ -41,11 +41,6 @@ public class RasberryPiController {
         this.rasberryPiDataService.addRecord(rasberryPiData);
     }
 
-    @PostMapping(value = "/queryData")
-    public List<RasberryPiData> querData(@RequestBody QueryData queryData){
-        return this.rasberryPiDataService.queryDataByRasberrPiID(queryData);
-    }
-
     @PostMapping(value = "/queryHistoryData")
     public List<RasberryPiData> querHistoryData(@RequestBody QueryData queryData){
         return this.rasberryPiDataService.queryDataByTimestamp(queryData);
@@ -67,8 +62,13 @@ public class RasberryPiController {
         this.topologyService.addTopologyInfo(topology);
     }
 
-    @PostMapping(value = "/topology/query")
-    public ConcurrentHashMap<String, List<Long>> queryTopology(@RequestBody QueryData queryData){
-        return this.topologyService.queryTopology(queryData);
+    @PostMapping(value = "/topology/querymodels")
+    public ConcurrentHashMap<String, List<Long>> queryModels(@RequestBody QueryData queryData){
+        return this.topologyService.queryAllModelWithSensors(queryData);
+    }
+
+    @PostMapping(value = "/topology/querysensors")
+    public ConcurrentHashMap<Long, String> querySensors(@RequestBody QueryData queryData){
+        return this.topologyService.queryAllSensorsWithModel(queryData);
     }
 }

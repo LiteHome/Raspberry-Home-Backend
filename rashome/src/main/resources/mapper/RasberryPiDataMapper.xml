@@ -89,6 +89,7 @@
   <select id="selectByTimestamp" parameterType="com.rashome.rashome.dto.QueryData" resultMap="BaseResultMap">
     select *
     from rasberryPiData
-    where collectTime between #{startTimestamp, jdbcType=BIGINT} and #{endTimestamp, jdbcType=BIGINT}
+    where collectTime between #{startTimestamp, jdbcType=BIGINT} and #{endTimestamp, jdbcType=BIGINT} and
+    rasberryPiID = #{rasberryPiID,jdbcType=BIGINT}
   </select>
 </mapper>

@@ -41,6 +41,9 @@ public class Dht11Controller {
     }
 
 
+    /*
+     * batch query = one raspiid with multiple sensorid
+     */
     @PostMapping(value = "/queryRealTimeData")
     public List<Dht11Data> queryRealTimeData(@RequestBody QueryData queryData) {
 
@@ -73,13 +76,21 @@ public class Dht11Controller {
         return result;
     }
 
+    /*
+     * no batch query = one raspiid with one sensorid
+     */
     @PostMapping(value = "/queryHistoryData")
     public List<Dht11Data> queryHistoryData(@RequestBody QueryData queryData){
-        System.out.println(queryData.toString());
+
+        var size = queryData.getSensorsID().size();
+        if (size == 0 || size > 1) {
+            return null;
+        }
         return this.dht11DataService.queryDataByTimestamp(queryData);
     }
 
     @PostMapping(value = "/queryData")
+    @Deprecated
     public List<Dht11Data> queryData(@RequestBody QueryData queryData){
         return this.dht11DataService.queryDataByRasberryIDAndSensorID(queryData);
     }

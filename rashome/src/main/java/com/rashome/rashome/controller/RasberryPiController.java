@@ -41,6 +41,9 @@ public class RasberryPiController {
         this.rasberryPiDataService.addRecord(rasberryPiData);
     }
 
+    /*
+     * one raspiid with no sensorsID
+     */
     @PostMapping(value = "/queryHistoryData")
     public List<RasberryPiData> querHistoryData(@RequestBody QueryData queryData){
         return this.rasberryPiDataService.queryDataByTimestamp(queryData);

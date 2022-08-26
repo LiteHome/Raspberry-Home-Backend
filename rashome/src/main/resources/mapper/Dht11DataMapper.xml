@@ -72,6 +72,11 @@
     select *
     from dht11Data
     where collectTime 
-    between #{startTimestamp, jdbcType=BIGINT} and #{endTimestamp, jdbcType=BIGINT}
+    between #{startTimestamp, jdbcType=BIGINT} and #{endTimestamp, jdbcType=BIGINT} and
+    rasberryPiID=#{rasberryPiID, jdbcType=BIGINT} and
+    sensorID = 
+    <foreach collection="sensorsID" item="sensorID">
+      #{sensorID, jdbcType=BIGINT}
+    </foreach>
   </select>
 </mapper>

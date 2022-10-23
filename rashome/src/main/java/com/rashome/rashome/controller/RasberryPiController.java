@@ -65,11 +65,20 @@ public class RasberryPiController {
         this.topologyService.addTopologyInfo(topology);
     }
 
+
+    /*
+     * key = single model
+     * value = ids
+     */
     @PostMapping(value = "/topology/querymodels")
     public ConcurrentHashMap<String, List<Long>> queryModels(@RequestBody QueryData queryData){
         return this.topologyService.queryAllModelWithSensors(queryData);
     }
 
+    /*
+     * key = id
+     * value = model
+     */
     @PostMapping(value = "/topology/querysensors")
     public ConcurrentHashMap<Long, String> querySensors(@RequestBody QueryData queryData){
         return this.topologyService.queryAllSensorsWithModel(queryData);

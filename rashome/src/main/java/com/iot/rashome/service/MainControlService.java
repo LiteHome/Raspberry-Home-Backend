@@ -9,8 +9,5 @@ import com.iot.rashome.dao.MainControlDao;
 public class MainControlService {
     
 
-    @Autowired
-    private MainControlDao mainControlDao;
-
 
 }

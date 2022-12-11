@@ -1,35 +1,46 @@
 package com.iot.rashome.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "main_control")
-public class MainControl {
+public class MainControlVO {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @CreationTimestamp
+    private Timestamp creationDate;
 
     private String updatedBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    @UpdateTimestamp
+    private Timestamp updatedDate;
 
     private String name;
 

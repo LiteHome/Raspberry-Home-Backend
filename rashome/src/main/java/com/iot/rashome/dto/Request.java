@@ -2,7 +2,6 @@ package com.iot.rashome.dto;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 import lombok.AllArgsConstructor;

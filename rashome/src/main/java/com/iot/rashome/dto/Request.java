@@ -14,9 +14,6 @@ import lombok.NoArgsConstructor;
 public class Request implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @JsonPropertyDescription("sampled date")
-    private String sampledDate;
-
     @JsonPropertyDescription("sensor value in json")
     private String value;
 }

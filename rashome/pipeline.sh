@@ -12,4 +12,4 @@ git pull
 mvn clean package
 kill_container || true
 docker build -t ${tag} .
-docker run -d -p 12580:12580 --restart always ${name}
+docker run -d -p 12580:12580 --restart always --name ${name} ${tag}

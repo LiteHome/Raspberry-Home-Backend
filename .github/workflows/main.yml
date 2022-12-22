@@ -11,4 +11,4 @@ jobs:
         method: POST
         contentType: application/json
         data: '{"host":"43.138.213.187","account":"root","ssh_file_path":"/root/.ssh","key_type":"ed25519","path":"/root/javaProject/rasberry-Home-Backend/rashome","image_name":"iot/backend","container_name":"rasHome","port":"12580"}'
-        timeout: 20
+        timeout: 2000

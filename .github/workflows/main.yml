@@ -5,22 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Deploy Stage
-      uses: CamiloGarciaLaRotta/watermelon-http-client@v1.5
+      uses: fjogeleit/http-request-action@v1.12.0
       with:
         url: 'http://43.138.213.187:4400/start'
-        method: post
-        headers: "{'Content-Type': 'application/json'}"
+        method: POST
+        customHeaders: '{"Content-Type": "application/json"}'
         data: '{"host":"43.138.213.187","account":"root","ssh_file_path":"/root/.ssh","key_type":"ed25519","path":"/root/javaProject/rasberry-Home-Backend/rashome","image_name":"iot/backend","container_name":"rasHome","port":"12580"}'
-        verbose: true
-    - name: Print the request
-      run: echo ${{ steps.request.outputs.status }}
-      shell: bash
-    - name: Print the response status
-      run: echo ${{ steps.request.outputs.status }}
-      shell: bash
-    - name: Print the response headers
-      run: echo ${{ steps.request.outputs.headers }}
-      shell: bash
-    - name: Print the response payload
-      run: echo ${{ steps.request.outputs.response }}
-      shell: bash

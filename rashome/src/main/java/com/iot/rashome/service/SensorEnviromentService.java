@@ -1,5 +1,8 @@
 package com.iot.rashome.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,10 @@ public class SensorEnviromentService implements BaseService<SensorEnviromentVO> 
     @Override
     public SensorEnviromentVO getLatestRecord(String sampledBy){
         return sensorEnviromentDao.findFirstBySampledByOrderBySampledDate(sampledBy);
+    }
+
+    @Override
+    public List<SensorEnviromentVO> getRecordBetweenDate(Date leftBorderDate, Date rightBorderDate){
+        return sensorEnviromentDao.findBySampledDateBetween(leftBorderDate, rightBorderDate);
     }
 }

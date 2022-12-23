@@ -1,5 +1,12 @@
 package com.iot.rashome.base;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot.rashome.dto.Request;
-
-import io.micrometer.common.util.StringUtils;
+import com.iot.rashome.util.DateUtil;
 
 public abstract class BaseController<S extends BaseService<V>, V> {
 
@@ -42,7 +48,7 @@ public abstract class BaseController<S extends BaseService<V>, V> {
             
             service.insert(v);
         } else {
-            logger.warn("insert method get null Request parameter");
+            logger.info("insert method get null Request parameter");
         }
     }
     
@@ -56,7 +62,56 @@ public abstract class BaseController<S extends BaseService<V>, V> {
 
             return service.getLatestRecord(sampledBy);
         } else {
-            logger.warn("getLatestRecordBySampledBy method get null SampledBy parameter");
+            logger.info("getLatestRecordBySampledBy method get null SampledBy parameter");
+            return null;
+        }
+    }
+
+    @GetMapping("/getRecordBetweenDate")
+    public List<V> getRecordBetweenDate(@RequestParam String left, @RequestParam String right){
+        
+        if(StringUtils.isNotBlank(left) && StringUtils.isNotBlank(right)){
+
+            left = StringUtils.trim(left);
+            right = StringUtils.trim(right);
+
+            try {
+                Date leftBorderDate = DateUtil.parseInAllPossiableFormat(left);
+                Date rightBorderDate = DateUtil.parseInAllPossiableFormat(right);
+
+                return service.getRecordBetweenDate(leftBorderDate, rightBorderDate);
+            } catch (ParseException e) {
+                logger.info("bad query date formatte, left is {}, right is {}", left, right, e);
+                return null;
+            }
+        } else {
+            logger.info("null parameter");
+            return null;
+        }
+    }
+
+    @GetMapping("/getRecordInLastDate")
+    public List<V> getRecordInLastDate(@RequestParam String unit, @RequestParam String quantity){
+
+        if (StringUtils.isNotBlank(unit) && StringUtils.isNotBlank(quantity)) {
+            unit = StringUtils.trimToNull(unit);
+            quantity = StringUtils.trimToNull(quantity);
+
+            if (!StringUtils.isNumeric(quantity)) {
+                logger.info("bad quantity format {}", quantity);
+                return null;
+            }
+
+            Pair<Date,Date> datePair = DateUtil.subtractDate(unit, Integer.parseInt(quantity));
+
+            if (ObjectUtils.isEmpty(datePair)) {
+                logger.info("bad unit format {}", unit);
+                return null;
+            }
+
+            return service.getRecordBetweenDate(datePair.getLeft(), datePair.getRight());
+        } else {
+            logger.info("null parameter");
             return null;
         }
     }

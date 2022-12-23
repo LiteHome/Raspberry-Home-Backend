@@ -24,7 +24,7 @@ public class SensorEnviromentService implements BaseService<SensorEnviromentVO> 
 
     @Override
     public SensorEnviromentVO getLatestRecord(String sampledBy){
-        return sensorEnviromentDao.findFirstBySampledByOrderBySampledDate(sampledBy);
+        return sensorEnviromentDao.findFirstBySampledByOrderBySampledDateDesc(sampledBy);
     }
 
     @Override

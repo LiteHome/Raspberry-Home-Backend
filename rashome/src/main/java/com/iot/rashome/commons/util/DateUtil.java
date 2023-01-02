@@ -1,4 +1,4 @@
-package com.iot.rashome.util;
+package com.iot.rashome.commons.util;
 
 import java.text.ParseException;
 import java.util.Calendar;

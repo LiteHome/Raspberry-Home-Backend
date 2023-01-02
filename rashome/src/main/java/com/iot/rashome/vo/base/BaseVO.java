@@ -1,15 +1,17 @@
-package com.iot.rashome.vo;
+package com.iot.rashome.vo.base;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -19,29 +21,25 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "main_control")
-public class MainControlVO {
-    
+@Embeddable
+@MappedSuperclass
+public abstract class BaseVO {
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
-    private String createdBy;
+    public String createdBy = "SYSTEM";
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     @CreationTimestamp
-    private Timestamp creationDate;
+    public Date creationDate;
 
-    private String updatedBy;
+    public String updatedBy = "SYSTEM";
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     @UpdateTimestamp
-    private Timestamp updatedDate;
-
-    private String name;
-
-    private String kind;
-
-    private String model;
+    public Date updatedDate;
 }

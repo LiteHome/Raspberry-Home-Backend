@@ -19,7 +19,11 @@ public class SensorDataService {
         return sensorDataDao.save(sensorDataVO);
     }
 
-    public SensorDataVO getLatestRecord(Long createBy){
+    public SensorDataVO getLatestRecordBySensorID(Long sensorID){
+        return sensorDataDao.findFirstBySensorIdOrderByCollectedDateDesc(sensorID);
+    }
+
+    public SensorDataVO getLatestRecordByCollectedBy(Long createBy){
         return sensorDataDao.findFirstByCollectedByOrderByCollectedDateDesc(createBy);
     }
 

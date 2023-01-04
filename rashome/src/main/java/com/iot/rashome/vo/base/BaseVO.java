@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
@@ -29,15 +30,19 @@ public abstract class BaseVO {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long id;
 
+    @JsonIgnore
     public String createdBy = "SYSTEM";
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     @CreationTimestamp
     public Date creationDate;
 
+    @JsonIgnore
     public String updatedBy = "SYSTEM";
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     @UpdateTimestamp

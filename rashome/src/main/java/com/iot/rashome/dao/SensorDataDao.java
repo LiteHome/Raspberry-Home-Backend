@@ -13,5 +13,7 @@ public interface SensorDataDao extends CrudRepository<SensorDataVO,Long> {
     
     SensorDataVO findFirstByCollectedByOrderByCollectedDateDesc(Long createdBy);
 
+    SensorDataVO findFirstBySensorIdOrderByCollectedDateDesc(Long sensorID);
+
     List<SensorDataVO> findByCollectedDateBetween(Date leftBorderDate, Date rightBorderDate);
 }

@@ -6,8 +6,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DeviceType {
 
-    MASTER("Master"),
-    SLAVE("Slave");
+    MCU("Microcontroller Unit"),
+    SENSOR("SENSOR"),
+    SBC("Single Board Computer");
 
     @Getter
     private String value;

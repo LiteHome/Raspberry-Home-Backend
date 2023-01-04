@@ -2,7 +2,7 @@ package com.iot.rashome.vo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "sensor_data")
+@JsonIgnoreProperties({"id", "collectedBy", "sensorId"})
 public class SensorDataVO {
 
     @Id
@@ -35,7 +36,6 @@ public class SensorDataVO {
     private Long collectedBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     private Date collectedDate;
 
     private Long sensorId;

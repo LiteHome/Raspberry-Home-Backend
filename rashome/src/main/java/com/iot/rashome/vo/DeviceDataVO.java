@@ -25,9 +25,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "sensor_data")
+@Table(name = "device_data")
 @JsonIgnoreProperties({"id", "collectedBy", "sensorId"})
-public class SensorDataVO {
+public class DeviceDataVO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

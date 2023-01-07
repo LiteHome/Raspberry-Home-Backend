@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.iot.rashome.vo.SensorDataVO;
+import com.iot.rashome.vo.DeviceDataVO;
 
 @Repository
-public interface SensorDataDao extends CrudRepository<SensorDataVO,Long> {
+public interface SensorDataDao extends CrudRepository<DeviceDataVO,Long> {
     
-    SensorDataVO findFirstByCollectedByOrderByCollectedDateDesc(Long createdBy);
+    DeviceDataVO findFirstByCollectedByOrderByCollectedDateDesc(Long createdBy);
 
-    SensorDataVO findFirstBySensorIdOrderByCollectedDateDesc(Long sensorID);
+    DeviceDataVO findFirstBySensorIdOrderByCollectedDateDesc(Long sensorID);
 
-    List<SensorDataVO> findByCollectedDateBetween(Date leftBorderDate, Date rightBorderDate);
+    List<DeviceDataVO> findByCollectedDateBetween(Date leftBorderDate, Date rightBorderDate);
 }

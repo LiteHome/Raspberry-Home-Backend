@@ -25,12 +25,6 @@ public class TopologyService {
     // master id : set<slave id>
     private static final Map<Long, Set<Long>> topologyMap = new ConcurrentHashMap<>();
 
-    static {
-        topologyMap.put(1L, new HashSet<>());
-
-        topologyMap.get(1L).add(2L);
-    }
-
     public void updateTopology(Long masterID, Long slaveID){
 
         topologyMap.putIfAbsent(masterID, new HashSet<>());

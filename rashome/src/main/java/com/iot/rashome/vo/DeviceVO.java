@@ -33,5 +33,5 @@ public class DeviceVO extends BaseVO {
 
 
     @Transient
-    private SensorDataVO sensorDataVO;
+    private DeviceDataVO sensorDataVO;
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iot.rashome.dao.SensorDataDao;
-import com.iot.rashome.vo.SensorDataVO;
+import com.iot.rashome.vo.DeviceDataVO;
 
 @Service
 public class SensorDataService {
@@ -15,19 +15,19 @@ public class SensorDataService {
     @Autowired
     private SensorDataDao sensorDataDao;
 
-    public SensorDataVO insert(SensorDataVO sensorDataVO){
+    public DeviceDataVO insert(DeviceDataVO sensorDataVO){
         return sensorDataDao.save(sensorDataVO);
     }
 
-    public SensorDataVO getLatestRecordBySensorID(Long sensorID){
+    public DeviceDataVO getLatestRecordBySensorID(Long sensorID){
         return sensorDataDao.findFirstBySensorIdOrderByCollectedDateDesc(sensorID);
     }
 
-    public SensorDataVO getLatestRecordByCollectedBy(Long createBy){
+    public DeviceDataVO getLatestRecordByCollectedBy(Long createBy){
         return sensorDataDao.findFirstByCollectedByOrderByCollectedDateDesc(createBy);
     }
 
-    public List<SensorDataVO> getRecordBetweenDate(Date leftBorderDate, Date rightBorderDate){
+    public List<DeviceDataVO> getRecordBetweenDate(Date leftBorderDate, Date rightBorderDate){
         return sensorDataDao.findByCollectedDateBetween(leftBorderDate, rightBorderDate);
     }
 }

@@ -19,8 +19,8 @@ import com.iot.rashome.dto.TopologyData;
 import com.iot.rashome.service.DeviceService;
 import com.iot.rashome.service.SensorDataService;
 import com.iot.rashome.service.TopologyService;
+import com.iot.rashome.vo.DeviceDataVO;
 import com.iot.rashome.vo.DeviceVO;
-import com.iot.rashome.vo.SensorDataVO;
 
 @RestController
 @RequestMapping("/sensordata")
@@ -35,7 +35,7 @@ public class SensorDataController {
     @Autowired
     private TopologyService topologyService;
 
-    private boolean isAllDeviceExist(SensorDataVO sensorDataVO){
+    private boolean isAllDeviceExist(DeviceDataVO sensorDataVO){
         if (BooleanUtils.isFalse(deviceService.isDeviceExist(sensorDataVO.getCollectedBy()))) {
             throw new DeviceIsNotRegistException(String.format("Device is not Registed, Device Id is %d", sensorDataVO.getCollectedBy()));
         } else if (BooleanUtils.isFalse(deviceService.isDeviceExist(sensorDataVO.getSensorId()))) {
@@ -46,7 +46,7 @@ public class SensorDataController {
     }
 
     @PostMapping("/")
-    public void addSensorData(@RequestBody SensorDataVO sensorDataVO) {
+    public void addSensorData(@RequestBody DeviceDataVO sensorDataVO) {
 
         if (ObjectUtils.isNotEmpty(sensorDataVO)) {
             if (ObjectUtils.isNotEmpty(sensorDataVO.getCollectedBy()) && ObjectUtils.isNotEmpty(sensorDataVO.getSensorId())) {

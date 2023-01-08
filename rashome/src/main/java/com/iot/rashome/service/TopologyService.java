@@ -21,9 +21,19 @@ public class TopologyService {
 
     @Autowired
     private DeviceService deviceService;
+
+    @Autowired
+    private DeviceDataService deviceDataService;
     
     // master id : set<slave id>
     private static final Map<Long, Set<Long>> topologyMap = new ConcurrentHashMap<>();
+
+    static {
+        topologyMap.putIfAbsent(1l, new HashSet<>());
+        Set<Long> slaveIDSet = topologyMap.get(1l);
+
+        slaveIDSet.add(2l);
+    }
 
     public void updateTopology(Long masterID, Long slaveID){
 
@@ -45,6 +55,8 @@ public class TopologyService {
         }
     }
 
+
+    // 返回 topology data, 只包含 device information data
     public TopologyData getTopology(Long masterID){
         
         TopologyData result = new TopologyData();
@@ -67,5 +79,21 @@ public class TopologyService {
         } else {
             throw new DeviceIsNotAppearException(String.format("Master is not Appearing, Master Device ID is %d", masterID));
         }
+    }
+
+    // 返回 topology data, 包含 master 和 全部 slave 的 device data
+    public TopologyData getTopologyWithDeviceData(Long masterId) {
+
+        TopologyData topologyData = getTopology(masterId);
+
+        topologyData.getMaster().setMasterDataVO(deviceDataService.getLatestMetrics(masterId));
+
+        List<DeviceVO> slaveList = topologyData.getSlave();
+
+        for (DeviceVO slaveVo : slaveList) {
+            slaveVo.setSensorDataVO(deviceDataService.getLatestSensorData(slaveVo.getId()));
+        }
+
+        return topologyData;
     }
 }

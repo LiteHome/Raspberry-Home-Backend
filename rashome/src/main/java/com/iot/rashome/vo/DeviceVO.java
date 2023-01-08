@@ -31,6 +31,8 @@ public class DeviceVO extends BaseVO {
     @JoinColumn(name = "device_information_id", referencedColumnName = "id")
     private DeviceInformationVO deviceInformationVO;
 
+    @Transient
+    private DeviceDataVO masterDataVO;
 
     @Transient
     private DeviceDataVO sensorDataVO;

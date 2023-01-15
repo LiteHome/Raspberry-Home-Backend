@@ -19,7 +19,7 @@ import com.iot.rashome.service.TopologyService;
 import com.iot.rashome.vo.DeviceDataVO;
 
 @RestController
-@RequestMapping("/sensordata")
+@RequestMapping("/data")
 public class DeviceDataController {
 
     @Autowired

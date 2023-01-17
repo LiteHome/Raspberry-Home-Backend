@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ParameterCheckUtil {
 
-    public static Boolean isStringHeaderNumeric(String parameter) {
+    public static Boolean isParameterNumeric(String parameter) {
         String trimedParameter = StringUtils.trimToNull(parameter);
-        return StringUtils.isNotEmpty(trimedParameter) & StringUtils.isNumeric(trimedParameter);
+        return StringUtils.isNotEmpty(trimedParameter) && StringUtils.isNumeric(trimedParameter);
     }
 }

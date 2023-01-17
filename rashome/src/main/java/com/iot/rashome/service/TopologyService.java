@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iot.rashome.commons.exception.DeviceIsNotAppearException;
-import com.iot.rashome.dto.TopologyData;
+import com.iot.rashome.dto.TopologyDataDTO;
 import com.iot.rashome.vo.DeviceVO;
 
 @Service
@@ -57,9 +57,9 @@ public class TopologyService {
 
 
     // 返回 topology data, 只包含 device information data
-    public TopologyData getTopology(Long masterID){
+    public TopologyDataDTO getTopology(Long masterID){
         
-        TopologyData result = new TopologyData();
+        TopologyDataDTO result = new TopologyDataDTO();
         List<Long> sensorIDList = getTopologyMap(masterID);
 
         DeviceVO masterDeviceVO = deviceService.findDeviceVOById(masterID);
@@ -82,9 +82,9 @@ public class TopologyService {
     }
 
     // 返回 topology data, 包含 master 和 全部 slave 的 device data
-    public TopologyData getTopologyWithDeviceData(Long masterId) {
+    public TopologyDataDTO getTopologyWithDeviceData(Long masterId) {
 
-        TopologyData topologyData = getTopology(masterId);
+        TopologyDataDTO topologyData = getTopology(masterId);
 
         topologyData.getMaster().setMasterDataVO(deviceDataService.getLatestMetrics(masterId));
 

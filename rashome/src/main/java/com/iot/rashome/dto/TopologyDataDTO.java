@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class TopologyData {
+public class TopologyDataDTO {
 
     private DeviceVO master;
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iot.rashome.commons.exception.DeviceIsNotRegistException;
 import com.iot.rashome.commons.exception.EmptyParameterException;
 import com.iot.rashome.commons.util.ParameterCheckUtil;
-import com.iot.rashome.dto.TopologyData;
+import com.iot.rashome.dto.TopologyDataDTO;
 import com.iot.rashome.service.DeviceDataService;
 import com.iot.rashome.service.DeviceService;
 import com.iot.rashome.service.TopologyService;
@@ -36,8 +36,8 @@ public class DeviceDataController {
     }
 
     private boolean isMasterIDAndSensorIDPresent(DeviceDataVO deviceDataVO){
-        return ObjectUtils.isNotEmpty(deviceDataVO) &
-               ObjectUtils.isNotEmpty(deviceDataVO.getMasterId()) &
+        return ObjectUtils.isNotEmpty(deviceDataVO) &&
+               ObjectUtils.isNotEmpty(deviceDataVO.getMasterId()) &&
                ObjectUtils.isNotEmpty(deviceDataVO.getSensorId());
     }
 
@@ -61,9 +61,9 @@ public class DeviceDataController {
     }
 
     @GetMapping("/")
-    public TopologyData getDeviceData(@RequestHeader String masterId) {
+    public TopologyDataDTO getDeviceData(@RequestHeader String masterId) {
 
-        if (ParameterCheckUtil.isStringHeaderNumeric(masterId)) {
+        if (ParameterCheckUtil.isParameterNumeric(masterId)) {
             long masterIdLong = Long.parseLong(masterId);
 
             if (isMasterRegist(masterIdLong)) {

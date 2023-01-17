@@ -53,10 +53,10 @@ public class DeviceDataController {
                 deviceDataService.insert(deviceDataVO);
                 topologyService.updateTopology(deviceDataVO.getMasterId(), deviceDataVO.getSensorId());
             } else {
-                throw new EmptyParameterException("Got Empty CreatedBy or/and SensorId");
+                throw new EmptyParameterException("Got Empty MasterID or/and SensorId");
             }
         } else {
-            throw new EmptyParameterException("Got Empty SensorDataVO");
+            throw new EmptyParameterException("Got Empty DeviceDataVO");
         }
     }
 

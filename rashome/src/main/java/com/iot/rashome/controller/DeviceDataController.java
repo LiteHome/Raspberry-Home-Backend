@@ -32,7 +32,7 @@ public class DeviceDataController {
     private TopologyService topologyService;
 
     private boolean isMasterAndSlaveRegist(DeviceDataVO deviceDataVO){
-        return deviceService.isDeviceExist(deviceDataVO.getMasterId()) & deviceService.isDeviceExist(deviceDataVO.getSensorId());
+        return deviceService.isDeviceExist(deviceDataVO.getMasterId()) && deviceService.isDeviceExist(deviceDataVO.getSensorId());
     }
 
     private boolean isMasterIDAndSensorIDPresent(DeviceDataVO deviceDataVO){
@@ -46,12 +46,12 @@ public class DeviceDataController {
     }
 
     @PostMapping("/")
-    public void addDeviceData(@RequestBody DeviceDataVO sensorDataVO) {
+    public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) {
 
-        if (isMasterIDAndSensorIDPresent(sensorDataVO)) {
-            if (isMasterAndSlaveRegist(sensorDataVO)) {
-                deviceDataService.insert(sensorDataVO);
-                topologyService.updateTopology(sensorDataVO.getMasterId(), sensorDataVO.getSensorId());
+        if (isMasterIDAndSensorIDPresent(deviceDataVO)) {
+            if (isMasterAndSlaveRegist(deviceDataVO)) {
+                deviceDataService.insert(deviceDataVO);
+                topologyService.updateTopology(deviceDataVO.getMasterId(), deviceDataVO.getSensorId());
             } else {
                 throw new EmptyParameterException("Got Empty CreatedBy or/and SensorId");
             }

@@ -24,4 +24,6 @@ public class DeviceInformationVO extends BaseVO {
     private String deviceType;
 
     private String deviceModel;
+
+    private String deviceDescription;
 }

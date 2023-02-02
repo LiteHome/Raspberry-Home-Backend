@@ -10,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,9 +30,7 @@ public class DeviceVO extends BaseVO {
     @JoinColumn(name = "device_information_id", referencedColumnName = "id")
     private DeviceInformationVO deviceInformationVO;
 
-    @Transient
-    private DeviceDataVO masterDataVO;
+    private String status;
 
-    @Transient
-    private DeviceDataVO sensorDataVO;
+    private String healthCheckUrl;
 }

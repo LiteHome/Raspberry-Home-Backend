@@ -27,22 +27,19 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "device_data")
-@JsonIgnoreProperties({"id", "masterId", "sensorId"})
+@JsonIgnoreProperties({"id", "deviceId"})
 public class DeviceDataVO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long id;
 
-    @JsonProperty(value = "master_id")
-    private Long masterId;
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(value = "collected_date")
     private Date collectedDate;
 
-    @JsonProperty(value = "sensor_id")
-    private Long sensorId;
+    @JsonProperty(value = "device_id")
+    private Long deviceId;
 
     private Float temperature;
 

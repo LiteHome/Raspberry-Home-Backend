@@ -16,11 +16,7 @@ public class DeviceDataService {
         return deviceDataDao.save(sensorDataVO);
     }
 
-    public DeviceDataVO getLatestSensorData(Long sensorId){
-        return deviceDataDao.findFirstBySensorIdOrderByCollectedDateDesc(sensorId);
-    }
-
-    public DeviceDataVO getLatestMetrics(Long masterId){
-        return deviceDataDao.findFirstByMasterIdAndSensorIdOrderByCollectedDateDesc(masterId, masterId);
+    public DeviceDataVO getLatestDeviceData(Long deviceId){
+        return deviceDataDao.findFirstByDeviceIdOrderByCollectedDateDesc(deviceId);
     }
 }

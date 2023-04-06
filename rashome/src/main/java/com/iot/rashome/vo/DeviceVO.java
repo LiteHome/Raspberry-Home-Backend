@@ -1,14 +1,13 @@
 package com.iot.rashome.vo;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.iot.rashome.vo.base.BaseVO;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +23,20 @@ import lombok.NoArgsConstructor;
 @Table(name = "device")
 public class DeviceVO extends BaseVO {
 
-    private String deviceNickname;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "device_information_id", referencedColumnName = "id")
-    private DeviceInformationVO deviceInformationVO;
+    private String deviceName;
 
     private String status;
 
     private String healthCheckUrl;
+
+    private String healthCheckRate;
+
+    private String deviceInformation;
+
+    @PrePersist
+    private void onCreate() {
+        if (StringUtils.isEmpty(healthCheckRate)) {
+            healthCheckRate = "5";
+        }
+    }
 }

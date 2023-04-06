@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RegistDeviceDTO {
-    
-    @JsonProperty(value = "device_nickname")
-    private String deviceNickname;
 
     @JsonProperty(value = "health_check_url")
     private String healthCheckUrl;
@@ -24,4 +21,7 @@ public class RegistDeviceDTO {
 
     @JsonProperty(value = "device_name")
     private String deviceName;
+
+    @JsonProperty(value = "device_information")
+    private String deviceInformation;
 }

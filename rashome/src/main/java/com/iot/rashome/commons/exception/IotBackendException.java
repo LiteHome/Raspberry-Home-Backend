@@ -1,6 +1,6 @@
 package com.iot.rashome.commons.exception;
 
-public class IotBackendException extends RuntimeException {
+public class IotBackendException extends Exception {
     
     public IotBackendException(){
         super();
@@ -20,6 +20,10 @@ public class IotBackendException extends RuntimeException {
 
     public static IotBackendException parametersInMessage(String message, Object... objects){
         return new IotBackendException(String.format(message, objects));
+    }
+
+    public static IotBackendException deviceIsNotRegist() {
+        return new IotBackendException("设备未注册");
     }
 
 

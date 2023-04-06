@@ -1,16 +1,18 @@
 package com.iot.rashome.commons.util;
 
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class DateUtil {
     
+    /**
+     * 解析全部可能的日期格式
+     * @param stringDate
+     * @return
+     * @throws ParseException
+     */
     public static Date parseInAllPossiableFormat(String stringDate) throws ParseException {
         return DateUtils.parseDate(stringDate, 
         "yyyy-MM-dd HH:mm:ss", 
@@ -21,34 +23,12 @@ public class DateUtil {
         "yyyy");
     }
 
-    public static Pair<Date, Date> subtractDate(String unit, Integer quantity){
-
-        Date currentDate = new Date();
-
-        MutablePair<Date, Date> result = new MutablePair<>();
-
-        if (StringUtils.equalsIgnoreCase(unit, "year")) {
-            result.left = DateUtils.addYears(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.YEAR);
-        } else if (StringUtils.equalsIgnoreCase(unit, "month")){
-            result.left = DateUtils.addMonths(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.MONTH);
-        } else if (StringUtils.equalsIgnoreCase(unit, "day")){
-            result.left = DateUtils.addDays(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.DATE);
-        } else if (StringUtils.equalsIgnoreCase(unit, "hour")){
-            result.left = DateUtils.addHours(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.HOUR);
-        } else if (StringUtils.equalsIgnoreCase(unit, "minute")){
-            result.left = DateUtils.addMinutes(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.MINUTE);
-        } else if (StringUtils.equalsIgnoreCase(unit, "second")){
-            result.left = DateUtils.addSeconds(currentDate, -quantity);
-            result.right = DateUtils.truncate(currentDate, Calendar.SECOND);
-        } else {
-            return null;
-        }
-
-        return result;
+    /**
+     * 计算当前日期和目标日期在 秒 上面的差别, 正值代表当前日期较新, 反之同理
+     * @param targetDate
+     * @return 秒数差别
+     */
+    public static int dateDiffInSecond(Date targetDate) {
+        return Math.round((new Date().getTime() - targetDate.getTime()) / 1000);
     }
 }

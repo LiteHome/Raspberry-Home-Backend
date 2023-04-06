@@ -3,9 +3,6 @@ package com.iot.rashome.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
@@ -20,8 +17,32 @@ public class DeviceService {
     @Autowired
     private DeviceDao deviceDao;
 
-    public DeviceVO findDeviceVOByDeviceNickname(String deviceNickname){
-        return deviceDao.findFirstByDeviceNickname(deviceNickname);
+    public DeviceVO offlineDevice(DeviceVO deviceVO) {
+
+        deviceVO.setStatus(DeviceStatus.OFFLINE.name());
+        return deviceDao.save(deviceVO);
+    }
+
+    public DeviceVO checkIfDeviceRegist(Long deviceID) {
+
+        Optional<DeviceVO> deviceOptional = deviceDao.findById(deviceID);
+
+        if (deviceOptional.isPresent()) {
+            return deviceOptional.get();
+        } else {
+            return null;
+        }
+    }
+
+    public DeviceVO checkIfDeviceRegist(String deviceName) {
+
+        Optional<DeviceVO> deviceVO = deviceDao.findByDeviceName(deviceName);
+
+        if (deviceVO.isPresent()) {
+            return deviceVO.get();
+        } else {
+            return null;
+        }
     }
 
     public DeviceVO finDeviceVOByDeviceId(Long deviceId){
@@ -38,14 +59,7 @@ public class DeviceService {
         return Streamable.of(deviceDao.saveAll(deviceVOList)).toList();
     }
 
-    public Pair<Boolean, DeviceVO> IsDeviceRegistByDeviceNickname(String deviceNickname){
-
-        DeviceVO deviceVO = findDeviceVOByDeviceNickname(deviceNickname);
-
-        return new MutablePair<Boolean, DeviceVO>(ObjectUtils.isNotEmpty(deviceVO), deviceVO);
-    }
-
-    public DeviceVO createDevice(DeviceVO deviceVO){
+    public DeviceVO saveDevice(DeviceVO deviceVO){
         return deviceDao.save(deviceVO);
     }
 

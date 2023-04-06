@@ -53,4 +53,7 @@ public class DeviceDataVO {
 
     @JsonProperty(value = "fail_fetch_sensor_data_count_avg")
     private Float failFetchSensorDataCountAvg;
+
+    @JsonProperty(value = "camera_image_url")
+    private Float cameraImageUrl;
 }

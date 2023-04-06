@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.dto.RegistDeviceDTO;
-import com.iot.rashome.service.DeviceInformationService;
 import com.iot.rashome.service.DeviceService;
-import com.iot.rashome.vo.DeviceInformationVO;
 import com.iot.rashome.vo.DeviceVO;
 
+/**
+ * 设备接口
+ */
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
@@ -26,66 +27,78 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
-    @Autowired
-    private DeviceInformationService deviceInformationService;
+    /**
+     * 参数校验并清理 RegistDeviceDTO 中字符串的空格
+     * @param registDeviceDTO 注册设备 VO
+     * @throws IotBackendException
+     */
+    private void checkAndTrimRegistDeviceDTO(RegistDeviceDTO registDeviceDTO) throws IotBackendException{
 
-    private void getRegistDeviceDTOClean(RegistDeviceDTO registDeviceDTO){
 
-        registDeviceDTO.setDeviceName(StringUtils.trimToNull(registDeviceDTO.getDeviceName()));
-        registDeviceDTO.setDeviceNickname(StringUtils.trimToNull(registDeviceDTO.getDeviceNickname()));
+        String deviceNameString = StringUtils.trimToEmpty(registDeviceDTO.getDeviceName());
+        String deviceInformatioString = StringUtils.trimToEmpty(registDeviceDTO.getDeviceInformation());
+
+        if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString)) {
+
+            registDeviceDTO.setDeviceInformation(deviceInformatioString);
+            registDeviceDTO.setDeviceName(deviceNameString);
+        } else {
+            throw new IotBackendException("Regist DeviceDTO 的 DeviceName 或 DeviceInformation 为空");
+        }
     }
 
+    private DeviceVO setDeviceVOFromRegistDeviceDTO(RegistDeviceDTO registDeviceDTO, DeviceVO deviceVO) {
+
+        deviceVO.setDeviceInformation(registDeviceDTO.getDeviceInformation());
+        deviceVO.setDeviceName(registDeviceDTO.getDeviceName());
+        deviceVO.setStatus(DeviceStatus.OFFLINE.name());
+        if (StringUtils.isNoneBlank(registDeviceDTO.getHealthCheckRate())) {
+            deviceVO.setHealthCheckRate(registDeviceDTO.getHealthCheckRate());
+        }
+
+        if (StringUtils.isNoneBlank(registDeviceDTO.getHealthCheckUrl())) {
+            deviceVO.setHealthCheckUrl(registDeviceDTO.getHealthCheckUrl());
+        }
+
+        return deviceVO;
+    }
+
+    /**
+     * 查询全部设备
+     * @return List<DeviceVO> 全部设备VO
+     */
     @GetMapping("/")
     public List<DeviceVO> getDevices(){
         return deviceService.getAllDevices();
     }
 
+    /**
+     * 1. 校验设备注册, 是否重名, 控制设备别名是全局唯一
+     * 2. 然后注册设备并返回设备 ID. 
+     * @param registDeviceDTO 注册设备 DTO
+     * @return 设备 ID
+     * @throws IotBackendException
+     */
     @PostMapping("/")
-    public Long registDevice(@RequestBody RegistDeviceDTO registDeviceDTO) {
+    public Long registDevice(@RequestBody RegistDeviceDTO registDeviceDTO) throws IotBackendException {
 
-        if (ObjectUtils.isEmpty(registDeviceDTO)) {
-            throw IotBackendException.nullParameters("注册信息 DTO");
-        }
-
-        getRegistDeviceDTOClean(registDeviceDTO);
-
-        if (StringUtils.isBlank(registDeviceDTO.getDeviceNickname()) || StringUtils.isBlank(registDeviceDTO.getDeviceName())) {
-            throw IotBackendException.nullParameters("设备别名", "设备信息");
-        }
-
-            
-        // 检查设备信息是否注册
-        DeviceInformationVO deviceInformationVO = deviceInformationService.findByDeviceInformationVO(registDeviceDTO.getDeviceName());
-        if (ObjectUtils.isEmpty(deviceInformationVO)) {
-            // 设备信息未注册
-            throw new IotBackendException("设备信息没有注册");
-        }
+        // 参数检查
+        checkAndTrimRegistDeviceDTO(registDeviceDTO);
         
-        // 设备信息已经注册过, 检查设备是否已经添加
-        DeviceVO deviceVO = deviceService.findDeviceVOByDeviceNickname(registDeviceDTO.getDeviceNickname());
-        if (ObjectUtils.isNotEmpty(deviceVO)) {
-            
-            // 如果设备信息一致, 则更新状态
-            if (StringUtils.equals(deviceVO.getDeviceInformationVO().getDeviceName(), registDeviceDTO.getDeviceName())) {
+        // 检查设备是否注册
+        DeviceVO deviceVO = deviceService.checkIfDeviceRegist(registDeviceDTO.getDeviceName());
 
-                deviceVO.setStatus(DeviceStatus.ONLINE.name());
-                DeviceVO updatedDeviceVO = deviceService.createDevice(deviceVO);
-                return updatedDeviceVO.getId();
-
-            } else {
-                // 设备信息不一致, 说明设备重名了
-                throw new IotBackendException("设备别名重复");
-            }
+        // 设备未注册, 注册设备并返回设备 ID
+        if (ObjectUtils.isEmpty(deviceVO)) {
+            DeviceVO newDeviceVO = setDeviceVOFromRegistDeviceDTO(registDeviceDTO, new DeviceVO());
+            return deviceService.saveDevice(newDeviceVO).getId();
         } else {
-
-            // 没有找到设备, 说明是新设备, 添加新设备并返回设备 id
-            DeviceVO newDeviceVO = new DeviceVO();
-            newDeviceVO.setDeviceNickname(registDeviceDTO.getDeviceNickname());
-            newDeviceVO.setStatus(DeviceStatus.ONLINE.name());
-            newDeviceVO.setDeviceInformationVO(deviceInformationVO);
-
-            return deviceService.createDevice(newDeviceVO).getId();
+            // 设备已注册, 更新 Device VO
+            DeviceVO newDeviceVO = setDeviceVOFromRegistDeviceDTO(registDeviceDTO, deviceVO);
+            newDeviceVO.setId(deviceVO.getId());
+            return deviceService.updateDeviceVO(newDeviceVO).getId();
         }
+
     }
 
 }

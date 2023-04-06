@@ -8,7 +8,7 @@ jobs:
       id: request
       uses: fjogeleit/http-request-action@v1.12.0
       with:
-        timeout: 25000
+        timeout: 60000
         url: 'http://43.138.213.187:4400/start'
         method: POST
         customHeaders: '{"Content-Type": "application/json"}'

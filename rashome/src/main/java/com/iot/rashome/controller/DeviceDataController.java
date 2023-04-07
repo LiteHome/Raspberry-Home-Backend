@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iot.rashome.commons.enums.DeviceStatus;
@@ -61,24 +61,28 @@ public class DeviceDataController {
 
     /**
      * 根据设备名称查询设备数据. 设计保证设备名称全局唯一
-     * @param deviceName 设备别名, UTF-8
+     * @param deviceName 设备名称, UTF-8
      * @return 设备数据
      * @throws UnsupportedEncodingException
      */
     @GetMapping("/")
-    public DeviceDataVO getDeviceData(@RequestHeader String deviceName) throws UnsupportedEncodingException, IotBackendException {
+    public DeviceDataVO getDeviceData(@RequestParam String deviceName) throws UnsupportedEncodingException, IotBackendException {
+
 
         // 参数检查
         if(StringUtils.isBlank(deviceName)){
             throw IotBackendException.nullParameters("设备别名");
         }
 
-        // 检查设备是否注册以及是否在线
+        // 根据设备名称查找设备
         DeviceVO deviceVO = deviceService.checkIfDeviceRegist(deviceName);
+
         if (ObjectUtils.isEmpty(deviceVO)) {
+            // 找不到设备说明没有注册
             throw IotBackendException.deviceIsNotRegist();
         } else if (deviceVO.getStatus().equals(DeviceStatus.OFFLINE.name())) {
-            throw new IotBackendException("设备下线");
+            // 设备下线
+            throw IotBackendException.parametersInMessage("%s 下线", deviceName);
         }
 
         // 获取设备数据

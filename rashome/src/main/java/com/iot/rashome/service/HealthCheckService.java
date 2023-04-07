@@ -31,7 +31,7 @@ public class HealthCheckService {
     @Autowired
     private DeviceDataService deviceDataService;
 
-    private Logger logger = LoggerFactory.getLogger(HealthCheckService.class);
+    private static final Logger logger = LoggerFactory.getLogger(HealthCheckService.class);
     
     /**
      * 定时健康检查任务, 固定频率为 1000ms * 60 = 一分钟

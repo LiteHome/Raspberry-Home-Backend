@@ -20,7 +20,7 @@ import com.iot.rashome.vo.DeviceDataVO;
 import com.iot.rashome.vo.DeviceVO;
 
 /**
- * 定时任务做健康检查
+ * 定时任务做设备健康检查
  */
 @Service
 public class HealthCheckService {
@@ -34,7 +34,7 @@ public class HealthCheckService {
     private Logger logger = LoggerFactory.getLogger(HealthCheckService.class);
     
     /**
-     * 定时健康检查任务, 固定频率吧为 1000ms * 60 = 一分钟
+     * 定时健康检查任务, 固定频率为 1000ms * 60 = 一分钟
      */
     @Scheduled(fixedRate = 1000 * 60)
     public void healthCheck() {

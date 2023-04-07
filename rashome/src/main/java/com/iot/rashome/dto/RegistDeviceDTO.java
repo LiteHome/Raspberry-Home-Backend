@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 前端传参, 注册设备VO
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

@@ -34,28 +34,37 @@ public class DeviceController {
      */
     private void checkAndTrimRegistDeviceDTO(RegistDeviceDTO registDeviceDTO) throws IotBackendException{
 
-
+        // 清理空格
         String deviceNameString = StringUtils.trimToEmpty(registDeviceDTO.getDeviceName());
         String deviceInformatioString = StringUtils.trimToEmpty(registDeviceDTO.getDeviceInformation());
 
+        // 校验参数是否为空
         if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString)) {
 
             registDeviceDTO.setDeviceInformation(deviceInformatioString);
             registDeviceDTO.setDeviceName(deviceNameString);
         } else {
-            throw new IotBackendException("Regist DeviceDTO 的 DeviceName 或 DeviceInformation 为空");
+            throw IotBackendException.nullParameters("DeviceName", "DeviceInformation");
         }
     }
 
+    /**
+     * 根据前端传参赋值 deviceVO
+     * @param registDeviceDTO 前端传参
+     * @param deviceVO
+     * @return
+     */
     private DeviceVO setDeviceVOFromRegistDeviceDTO(RegistDeviceDTO registDeviceDTO, DeviceVO deviceVO) {
 
+        // 赋值
         deviceVO.setDeviceInformation(registDeviceDTO.getDeviceInformation());
         deviceVO.setDeviceName(registDeviceDTO.getDeviceName());
         deviceVO.setStatus(DeviceStatus.OFFLINE.name());
+        // health check rate 可以为空, 有默认值
         if (StringUtils.isNoneBlank(registDeviceDTO.getHealthCheckRate())) {
             deviceVO.setHealthCheckRate(registDeviceDTO.getHealthCheckRate());
         }
-
+        // health check url 可以为空, 有默认值
         if (StringUtils.isNoneBlank(registDeviceDTO.getHealthCheckUrl())) {
             deviceVO.setHealthCheckUrl(registDeviceDTO.getHealthCheckUrl());
         }

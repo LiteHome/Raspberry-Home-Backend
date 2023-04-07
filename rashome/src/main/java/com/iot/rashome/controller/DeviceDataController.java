@@ -47,6 +47,9 @@ public class DeviceDataController {
         
         // 校验设备是否注册, 如果注册, 则 deviceVO 不为空
         DeviceVO deviceVO = deviceService.checkIfDeviceRegist(deviceDataVO.getDeviceId());
+        if (ObjectUtils.isEmpty(deviceVO)) {
+            throw IotBackendException.deviceIsNotRegist();
+        }
 
         // 更新设备状态
         deviceVO.setStatus(DeviceStatus.ONLINE.name());

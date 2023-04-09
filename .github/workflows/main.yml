@@ -12,7 +12,7 @@ jobs:
         url: 'http://43.138.213.187:4400/start'
         method: POST
         customHeaders: '{"Content-Type": "application/json"}'
-        data: '{"host":"43.138.213.187","account":"root","ssh_file_path":"/root/.ssh","key_type":"ed25519","path":"/root/javaProject/rasberry-Home-Backend/rashome","image_name":"iot/backend","container_name":"rasHome","port":"12580"}'
+        data: '{"host":"43.138.213.187","account":"root","ssh_file_path":"/root/.ssh","key_type":"ed25519","path":"/root/javaProject/rasberry-Home-Backend/rashome","image_name":"iot/backend","container_name":"rasHome","port":"12580","repository_name":"nopepsi/app"}'
     - name: Show Response
       run: |
         echo ${{ steps.request.outputs.response }}

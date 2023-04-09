@@ -48,7 +48,7 @@ public class DeviceVO {
     public Date updatedDate;
 
     // 默认值是下线
-    private String status = DeviceStatus.OFFLINE.name();
+    private String status = DeviceStatus.ONLINE.name();
 
     @JsonProperty(value = "health_check_url")
     private String healthCheckUrl;

@@ -21,7 +21,7 @@ public class HttpUtil {
      * post json 请求
      * @param url
      * @param payload
-     * @return
+     * @return String 请求成功响应的 body
      * @throws IotBackendException
      * @throws RestClientException
      * @throws IllegalArgumentException

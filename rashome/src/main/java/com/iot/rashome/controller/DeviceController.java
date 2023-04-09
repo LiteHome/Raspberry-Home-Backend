@@ -60,27 +60,6 @@ public class DeviceController {
         }
     }
 
-    private DeviceVO createAndSetBasicPropertyOfDeviceVO(DeviceVO deviceVO) {
-
-        DeviceVO resultDeviceVO = new DeviceVO();
-
-        resultDeviceVO.setDeviceName(deviceVO.getDeviceName());
-        resultDeviceVO.setDeviceInformation(deviceVO.getDeviceInformation());
-        if (ObjectUtils.isNotEmpty(deviceVO.getId())) {
-            resultDeviceVO.setId(deviceVO.getId());
-        }
-        if (StringUtils.isNotEmpty(deviceVO.getHealthCheckUrl())) {
-            resultDeviceVO.setHealthCheckUrl(deviceVO.getHealthCheckUrl());
-        }
-        if (StringUtils.isNotEmpty(deviceVO.getHealthCheckRate())) {
-            resultDeviceVO.setHealthCheckUrl(deviceVO.getHealthCheckRate());
-        }
-
-        resultDeviceVO.setStatus(DeviceStatus.OFFLINE.name());
-
-        return resultDeviceVO;
-    }
-
     /**
      * 查询全部设备
      * @return List<DeviceVO> 全部设备VO

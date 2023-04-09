@@ -34,10 +34,6 @@ public class DeviceDataService {
      * @param deviceId
      * @return
      */
-    @Transactional(
-        readOnly = true,
-        timeout = 5
-    )
     public DeviceDataVO getLatestDeviceData(Long deviceId){
         return deviceDataDao.findFirstByDeviceIdOrderByCollectedDateDesc(deviceId);
     }

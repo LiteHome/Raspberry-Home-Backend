@@ -5,6 +5,9 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,11 @@ public class DeviceDataController {
      * @param deviceDataVO 设备数据 VO
      * @throws IotBackendException
      */
+    @Transactional(
+        propagation = Propagation.REQUIRED,
+        isolation = Isolation.READ_COMMITTED,
+        timeout = 10
+    )
     @PostMapping("/")
     public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) throws IotBackendException {
 

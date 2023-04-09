@@ -28,10 +28,6 @@ public class DeviceService {
      * @param deviceID 设备 ID
      * @return 注册则返回数据库数据, 否则返回 null
      */
-    @Transactional(
-        readOnly = true,
-        timeout = 2
-    )
     public DeviceVO checkIfDeviceRegist(Long deviceID) {
 
         Optional<DeviceVO> deviceOptional = deviceDao.findById(deviceID);
@@ -48,10 +44,6 @@ public class DeviceService {
      * @param deviceName 设备名称
      * @return 注册则返回数据库数据, 否则返回 null
      */
-    @Transactional(
-        readOnly = true,
-        timeout = 2
-    )
     public DeviceVO checkIfDeviceRegist(String deviceName) {
 
         Optional<DeviceVO> deviceVO = deviceDao.findByDeviceName(deviceName);
@@ -100,18 +92,12 @@ public class DeviceService {
         return deviceDao.save(deviceVO);
     }
 
-    @Transactional(
-        readOnly = true,
-        timeout = 5
-    )
+
     public List<DeviceVO> getAllDevices(){
         return Streamable.of(deviceDao.findAll()).toList();
     }
 
-    @Transactional(
-        readOnly = true,
-        timeout = 5
-    )
+
     public List<DeviceVO> getAllOnlineDevices(){
         return deviceDao.findByStatus(DeviceStatus.ONLINE.name());
     }

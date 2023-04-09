@@ -1,42 +1,65 @@
 package com.iot.rashome.vo;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.iot.rashome.vo.base.BaseVO;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.iot.rashome.commons.enums.DeviceStatus;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(Include.NON_NULL)
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "device")
-public class DeviceVO extends BaseVO {
+@JsonIgnoreProperties({"id", "createdBy", "creationDate", "updatedBy", "updatedDate"})
+public class DeviceVO {
 
-    private String deviceName;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Long id;
 
-    private String status;
+    public String createdBy = "SYSTEM";
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(updatable = false)
+    public Date creationDate;
+
+    public String updatedBy = "SYSTEM";
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    public Date updatedDate;
+
+    // 默认值是下线
+    private String status = DeviceStatus.OFFLINE.name();
+
+    @JsonProperty(value = "health_check_url")
     private String healthCheckUrl;
 
-    private String healthCheckRate;
+    // 默认值是 30s
+    @JsonProperty(value = "health_check_rate")
+    private String healthCheckRate = "30";
 
+    @JsonProperty(value = "device_name")
+    private String deviceName;
+
+    @JsonProperty(value = "device_information")
     private String deviceInformation;
-
-    @PrePersist
-    private void onCreate() {
-        if (StringUtils.isEmpty(healthCheckRate)) {
-            healthCheckRate = "5";
-        }
-    }
 }

@@ -54,7 +54,7 @@ public class DeviceDataController {
         }
         
         // 校验设备是否注册, 如果注册, 则 deviceVO 不为空
-        DeviceVO deviceVO = deviceService.checkIfDeviceRegist(deviceDataVO.getDeviceId());
+        DeviceVO deviceVO = deviceService.checkIfDeviceRegistByDeviceId(deviceDataVO.getDeviceId());
         if (ObjectUtils.isEmpty(deviceVO)) {
             throw IotBackendException.deviceIsNotRegist();
         }
@@ -83,7 +83,7 @@ public class DeviceDataController {
         }
 
         // 根据设备名称查找设备
-        DeviceVO deviceVO = deviceService.checkIfDeviceRegist(deviceName);
+        DeviceVO deviceVO = deviceService.checkIfDeviceRegistByDeviceName(deviceName);
 
         if (ObjectUtils.isEmpty(deviceVO)) {
             // 找不到设备说明没有注册

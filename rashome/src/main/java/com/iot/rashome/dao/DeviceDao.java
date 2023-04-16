@@ -23,4 +23,10 @@ public interface DeviceDao extends CrudRepository<DeviceVO, Long> {
         timeout = 2
     )
     Optional<DeviceVO> findByDeviceName(String deviceName);
+
+    @Transactional(
+        readOnly = true,
+        timeout = 2
+    )
+    Optional<DeviceVO> findByDeviceUccid(String deviceUccid);
 }

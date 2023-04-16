@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.enums.ResultCode;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.dto.ResultDTO;
@@ -48,14 +47,16 @@ public class DeviceController {
             // 清理空格
             String deviceNameString = StringUtils.trimToEmpty(deviceVO.getDeviceName());
             String deviceInformatioString = StringUtils.trimToEmpty(deviceVO.getDeviceInformation());
+            String deviceIdString = StringUtils.trimToEmpty(deviceVO.getDeviceUccid());
 
             // 校验参数是否为空
-            if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString)) {
+            if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString, deviceIdString)) {
 
                 deviceVO.setDeviceInformation(deviceInformatioString);
                 deviceVO.setDeviceName(deviceNameString);
+                deviceVO.setDeviceUccid(deviceIdString);
             } else {
-                throw IotBackendException.nullParameters("DeviceName", "DeviceInformation");
+                throw IotBackendException.nullParameters("DeviceName", "DeviceInformation, DeviceId");
             }
         }
     }
@@ -70,7 +71,7 @@ public class DeviceController {
     }
 
     /**
-     * 1. 校验设备注册, 是否重名, 控制设备别名是全局唯一
+     * 1. 校验设备注册, UCCID 是否唯一
      * 2. 然后注册设备并返回设备 ID.
      * 3. 重名设备, 如果旧设备已经下线, 则直接覆盖. 否则该次请求失败
      * @param registDeviceDTO 注册设备 DTO
@@ -81,7 +82,7 @@ public class DeviceController {
     @Transactional(
         propagation = Propagation.REQUIRED,
         isolation = Isolation.READ_COMMITTED,
-        timeout = 100
+        timeout = 10
     )
     @PostMapping("/")
     public ResultDTO registDevice(@RequestBody List<DeviceVO> deviceVOList) throws IotBackendException, JsonProcessingException {
@@ -90,22 +91,15 @@ public class DeviceController {
         checkAndTrimRegistDeviceDTO(deviceVOList);
 
         for (DeviceVO deviceVO : deviceVOList) {
-
             // 检查设备是否注册
-            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegist(deviceVO.getDeviceName());
+            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUccid(deviceVO.getDeviceUccid());
             if (ObjectUtils.isNotEmpty(databaseDeviceVO)) {
-                if (databaseDeviceVO.getStatus().equals(DeviceStatus.OFFLINE.name())) {
-                    // 设备已注册但是下线, 注入设备 ID, 覆盖原来的信息
-                    deviceVO.setId(databaseDeviceVO.getId());
-                } else {
-                    // 设备已注册且上线, 不允许覆盖
-                    return ResultDTO.fail(ResultCode.DUPLICATE_DEVICE_NAME.getCode(), String.format("重名设备 %s", deviceVO.getDeviceName()));
-                }
-            } 
+                return ResultDTO.fail(ResultCode.DUPLICATE_DEVICE_UCCID.getCode(), String.format("设备 UCCID 重复,  %s", deviceVO.getDeviceUccid()));
+            }
         }
 
         // 没有注册的设备在这一步注册
-        List<DeviceVO> updatedDeviceVOList = deviceService.updateDeviceVO(deviceVOList);;
+        List<DeviceVO> updatedDeviceVOList = deviceService.updateDeviceVO(deviceVOList);
 
         return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(updatedDeviceVOList));
     }

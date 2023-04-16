@@ -25,12 +25,28 @@ public class DeviceService {
 
     /**
      * 检查设备是否注册
-     * @param deviceID 设备 ID
+     * @param deviceID 设备主键 ID
      * @return 注册则返回数据库数据, 否则返回 null
      */
-    public DeviceVO checkIfDeviceRegist(Long deviceID) {
+    public DeviceVO checkIfDeviceRegistByDeviceId(Long deviceID) {
 
         Optional<DeviceVO> deviceOptional = deviceDao.findById(deviceID);
+
+        if (deviceOptional.isPresent()) {
+            return deviceOptional.get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 检查设备是否注册
+     * @param deviceUccid 设备 Uccid
+     * @return 注册则返回数据库数据, 否则返回 null
+     */
+    public DeviceVO checkIfDeviceRegistByDeviceUccid(String deviceUccid) {
+
+        Optional<DeviceVO> deviceOptional = deviceDao.findByDeviceUccid(deviceUccid);
 
         if (deviceOptional.isPresent()) {
             return deviceOptional.get();
@@ -44,7 +60,7 @@ public class DeviceService {
      * @param deviceName 设备名称
      * @return 注册则返回数据库数据, 否则返回 null
      */
-    public DeviceVO checkIfDeviceRegist(String deviceName) {
+    public DeviceVO checkIfDeviceRegistByDeviceName(String deviceName) {
 
         Optional<DeviceVO> deviceVO = deviceDao.findByDeviceName(deviceName);
 

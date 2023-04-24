@@ -28,5 +28,5 @@ public interface DeviceDao extends CrudRepository<DeviceVO, Long> {
         readOnly = true,
         timeout = 2
     )
-    Optional<DeviceVO> findByDeviceUccid(String deviceUccid);
+    Optional<DeviceVO> findByDeviceUuid(String deviceUccid);
 }

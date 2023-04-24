@@ -63,7 +63,7 @@ public class DeviceVO {
     @JsonProperty(value = "device_information")
     private String deviceInformation;
 
-    @JsonProperty(value = "device_uccid")
+    @JsonProperty(value = "device_uuid")
     private String deviceUuid;
 
     @JsonProperty(value = "device_tag")

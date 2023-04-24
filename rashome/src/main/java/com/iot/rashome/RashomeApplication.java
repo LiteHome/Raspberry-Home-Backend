@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableTransactionManagement
 public class RashomeApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(RashomeApplication.class, args);
 	}

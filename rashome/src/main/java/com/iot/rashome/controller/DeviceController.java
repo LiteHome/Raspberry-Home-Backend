@@ -44,20 +44,18 @@ public class DeviceController {
         for (DeviceVO deviceVO : deviceVOList) {
 
             // 清理空格
-            String deviceNameString = StringUtils.trimToEmpty(deviceVO.getDeviceName());
             String deviceInformatioString = StringUtils.trimToEmpty(deviceVO.getDeviceInformation());
             String deviceUuidString = StringUtils.trimToEmpty(deviceVO.getDeviceUuid());
             String deviceTagString = StringUtils.trimToEmpty(deviceVO.getDeviceTag());
 
             // 校验参数是否为空
-            if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString, deviceUuidString)) {
+            if (StringUtils.isNoneEmpty(deviceInformatioString, deviceUuidString)) {
 
                 deviceVO.setDeviceInformation(deviceInformatioString);
-                deviceVO.setDeviceName(deviceNameString);
                 deviceVO.setDeviceUuid(deviceUuidString);
                 deviceVO.setDeviceTag(deviceTagString);
             } else {
-                throw IotBackendException.nullParameters("DeviceName", "DeviceInformation, DeviceUuid");
+                throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid");
             }
         }
     }

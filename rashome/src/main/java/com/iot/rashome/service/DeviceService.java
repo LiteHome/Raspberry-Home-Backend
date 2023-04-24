@@ -46,7 +46,7 @@ public class DeviceService {
      */
     public DeviceVO checkIfDeviceRegistByDeviceUuid(String deviceUccid) {
 
-        Optional<DeviceVO> deviceOptional = deviceDao.findByDeviceUccid(deviceUccid);
+        Optional<DeviceVO> deviceOptional = deviceDao.findByDeviceUuid(deviceUccid);
 
         if (deviceOptional.isPresent()) {
             return deviceOptional.get();

@@ -44,7 +44,7 @@ public class DeviceService {
      * @param deviceUccid 设备 Uccid
      * @return 注册则返回数据库数据, 否则返回 null
      */
-    public DeviceVO checkIfDeviceRegistByDeviceUccid(String deviceUccid) {
+    public DeviceVO checkIfDeviceRegistByDeviceUuid(String deviceUccid) {
 
         Optional<DeviceVO> deviceOptional = deviceDao.findByDeviceUccid(deviceUccid);
 

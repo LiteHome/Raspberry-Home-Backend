@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iot.rashome.commons.enums.ResultCode;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.dto.ResultDTO;
 import com.iot.rashome.service.DeviceService;
@@ -47,16 +46,18 @@ public class DeviceController {
             // 清理空格
             String deviceNameString = StringUtils.trimToEmpty(deviceVO.getDeviceName());
             String deviceInformatioString = StringUtils.trimToEmpty(deviceVO.getDeviceInformation());
-            String deviceIdString = StringUtils.trimToEmpty(deviceVO.getDeviceUccid());
+            String deviceUuidString = StringUtils.trimToEmpty(deviceVO.getDeviceUuid());
+            String deviceTagString = StringUtils.trimToEmpty(deviceVO.getDeviceTag());
 
             // 校验参数是否为空
-            if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString, deviceIdString)) {
+            if (StringUtils.isNoneEmpty(deviceNameString, deviceInformatioString, deviceUuidString)) {
 
                 deviceVO.setDeviceInformation(deviceInformatioString);
                 deviceVO.setDeviceName(deviceNameString);
-                deviceVO.setDeviceUccid(deviceIdString);
+                deviceVO.setDeviceUuid(deviceUuidString);
+                deviceVO.setDeviceTag(deviceTagString);
             } else {
-                throw IotBackendException.nullParameters("DeviceName", "DeviceInformation, DeviceId");
+                throw IotBackendException.nullParameters("DeviceName", "DeviceInformation, DeviceUuid");
             }
         }
     }
@@ -71,7 +72,7 @@ public class DeviceController {
     }
 
     /**
-     * 1. 校验设备注册, UCCID 是否唯一
+     * 1. 校验设备是否已经注册, 通过 uuid 保证唯一
      * 2. 然后注册设备并返回设备 ID.
      * 3. 重名设备, 如果旧设备已经下线, 则直接覆盖. 否则该次请求失败
      * @param registDeviceDTO 注册设备 DTO
@@ -92,9 +93,9 @@ public class DeviceController {
 
         for (DeviceVO deviceVO : deviceVOList) {
             // 检查设备是否注册
-            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUccid(deviceVO.getDeviceUccid());
+            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
             if (ObjectUtils.isNotEmpty(databaseDeviceVO)) {
-                return ResultDTO.fail(ResultCode.DUPLICATE_DEVICE_UCCID.getCode(), String.format("设备 UCCID 重复,  %s", deviceVO.getDeviceUccid()));
+                deviceVO.setId(databaseDeviceVO.getId());
             }
         }
 

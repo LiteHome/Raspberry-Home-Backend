@@ -2,6 +2,8 @@ package com.iot.rashome.vo;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -52,4 +54,8 @@ public class DeviceDataVO {
 
     @JsonProperty(value = "camera_image_url")
     private Float cameraImageUrl;
+
+    @Transient
+    @JsonProperty(value = "camera_image_base64")
+    private String cameraImageBase64;
 }

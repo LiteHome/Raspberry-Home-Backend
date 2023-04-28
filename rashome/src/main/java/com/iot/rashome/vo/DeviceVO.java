@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "device")
-@JsonIgnoreProperties({"id", "createdBy", "creationDate", "updatedBy", "updatedDate"})
+@JsonIgnoreProperties({"createdBy", "creationDate", "updatedBy", "updatedDate"})
 public class DeviceVO {
 
     @Id

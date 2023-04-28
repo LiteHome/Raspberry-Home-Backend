@@ -39,7 +39,7 @@ public class DeviceController {
      * @param deviceVOList 注册设备 VO
      * @throws IotBackendException
      */
-    private void checkAndTrimRegistDeviceDTO(List<DeviceVO> deviceVOList) throws IotBackendException{
+    private void checkAndTrimRegistDeviceDTO(DeviceVO  ...deviceVOList) throws IotBackendException{
 
         for (DeviceVO deviceVO : deviceVOList) {
 
@@ -84,23 +84,21 @@ public class DeviceController {
         timeout = 10
     )
     @PostMapping("/")
-    public ResultDTO registDevice(@RequestBody List<DeviceVO> deviceVOList) throws IotBackendException, JsonProcessingException {
+    public ResultDTO registDevice(@RequestBody DeviceVO deviceVO) throws IotBackendException, JsonProcessingException {
 
         // 参数检查
-        checkAndTrimRegistDeviceDTO(deviceVOList);
+        checkAndTrimRegistDeviceDTO(deviceVO);
 
-        for (DeviceVO deviceVO : deviceVOList) {
-            // 检查设备是否注册
-            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
-            if (ObjectUtils.isNotEmpty(databaseDeviceVO)) {
-                deviceVO.setId(databaseDeviceVO.getId());
-            }
+        // 检查设备是否注册
+        DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
+        if (ObjectUtils.isNotEmpty(databaseDeviceVO)) {
+            deviceVO.setId(databaseDeviceVO.getId());
         }
 
         // 没有注册的设备在这一步注册
-        List<DeviceVO> updatedDeviceVOList = deviceService.updateDeviceVO(deviceVOList);
+        DeviceVO updatedDeviceVO = deviceService.updateDeviceVO(deviceVO);
 
-        return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(updatedDeviceVOList));
+        return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(updatedDeviceVO));
     }
 
 }

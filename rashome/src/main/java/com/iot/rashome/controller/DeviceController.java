@@ -46,16 +46,20 @@ public class DeviceController {
             // 清理空格
             String deviceInformatioString = StringUtils.trimToEmpty(deviceVO.getDeviceInformation());
             String deviceUuidString = StringUtils.trimToEmpty(deviceVO.getDeviceUuid());
+            String deviceParentUuidString = StringUtils.trimToEmpty(deviceVO.getParentUuid());
+            String deviceGatewayUuidString = StringUtils.trimToEmpty(deviceVO.getGatewayUuid());
             String deviceTagString = StringUtils.trimToEmpty(deviceVO.getDeviceTag());
 
             // 校验参数是否为空
-            if (StringUtils.isNoneEmpty(deviceInformatioString, deviceUuidString)) {
+            if (StringUtils.isNoneEmpty(deviceInformatioString, deviceUuidString, deviceParentUuidString, deviceGatewayUuidString)) {
 
                 deviceVO.setDeviceInformation(deviceInformatioString);
                 deviceVO.setDeviceUuid(deviceUuidString);
+                deviceVO.setParentUuid(deviceParentUuidString);
+                deviceVO.setGatewayUuid(deviceGatewayUuidString);
                 deviceVO.setDeviceTag(deviceTagString);
             } else {
-                throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid");
+                throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid, Device Parent Uuid, Gateway Uuid");
             }
         }
     }

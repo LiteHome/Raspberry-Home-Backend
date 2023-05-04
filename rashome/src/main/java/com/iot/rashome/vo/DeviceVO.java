@@ -66,6 +66,12 @@ public class DeviceVO {
     @JsonProperty(value = "device_uuid")
     private String deviceUuid;
 
+    @JsonProperty(value = "parent_uuid")
+    private String parentUuid;
+
+    @JsonProperty(value = "gateway_uuid")
+    private String gatewayUuid;
+
     @JsonProperty(value = "device_tag")
     private String deviceTag;
 }

@@ -2,6 +2,8 @@ package com.iot.rashome.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -33,6 +35,7 @@ public class DeviceDataVO {
 
     @Temporal(TemporalType.DATE)
     @JsonProperty(value = "collected_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd- hh:mm:ss.SSS")
     private Date collectedDate;
 
     @JsonProperty(value = "device_id")
@@ -52,7 +55,7 @@ public class DeviceDataVO {
     private Float failFetchSensorDataCountAvg;
 
     @JsonProperty(value = "camera_image_url")
-    private Float cameraImageUrl;
+    private String cameraImageUrl;
 
     @Transient
     @JsonProperty(value = "camera_image_base64")

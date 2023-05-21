@@ -1,6 +1,7 @@
 package com.iot.rashome.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.service.DeviceDataService;
 import com.iot.rashome.service.DeviceService;
+import com.iot.rashome.service.ImageService;
 import com.iot.rashome.vo.DeviceDataVO;
 import com.iot.rashome.vo.DeviceVO;
 
@@ -35,22 +37,29 @@ public class DeviceDataController {
     @Autowired
     private DeviceService deviceService;
 
+    @Autowired
+    private ImageService imageService;
+
     /**
      * 校验设备是否注册, 将设备数据插入数据库
      * @param deviceDataVO 设备数据 VO
      * @throws IotBackendException
      */
+    // todo: 时间序列化应该在应用层处理, 增加兜底逻辑
     @Transactional(
         propagation = Propagation.REQUIRED,
         isolation = Isolation.READ_COMMITTED,
         timeout = 10
     )
     @PostMapping("/")
-    public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) throws IotBackendException {
+    public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) throws IotBackendException, ParseException {
 
         // 参数检查
-        if (ObjectUtils.isEmpty(deviceDataVO) || ObjectUtils.isEmpty(deviceDataVO.getDeviceId())){
-            throw IotBackendException.nullParameters("设备数据 VO", "设备 ID");
+        if (
+            ObjectUtils.isEmpty(deviceDataVO) || 
+            ObjectUtils.isEmpty(deviceDataVO.getDeviceId()) ||
+            ObjectUtils.isEmpty(deviceDataVO.getCollectedDate())){
+            throw IotBackendException.nullParameters("设备数据 VO", "设备 ID, 数据收集时间");
         }
         
         // 校验设备是否注册, 如果注册, 则 deviceVO 不为空
@@ -62,6 +71,15 @@ public class DeviceDataController {
         // 更新设备状态
         deviceVO.setStatus(DeviceStatus.ONLINE.name());
         deviceService.updateDeviceVO(deviceVO);
+
+
+        // 如果图片数据不为空, 则进行图片处理
+        if (StringUtils.isNotBlank(deviceDataVO.getCameraImageBase64())) {
+
+            String imageUrl = imageService.imageToUrl(deviceDataVO);
+
+            deviceDataVO.setCameraImageUrl(imageUrl);
+        }
 
         // 设备数据插入数据库
         deviceDataService.insert(deviceDataVO);

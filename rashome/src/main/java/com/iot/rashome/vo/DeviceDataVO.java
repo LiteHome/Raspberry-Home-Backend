@@ -35,7 +35,7 @@ public class DeviceDataVO {
 
     @Temporal(TemporalType.DATE)
     @JsonProperty(value = "collected_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd- hh:mm:ss.SSS")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
     private Date collectedDate;
 
     @JsonProperty(value = "device_id")

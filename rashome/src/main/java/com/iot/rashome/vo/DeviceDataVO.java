@@ -45,6 +45,9 @@ public class DeviceDataVO {
 
     private Float humidity;
 
+    @JsonProperty(value = "cpu_usage")
+    private String cpuUsage;
+
     @JsonProperty(value = "success_request_latency_avg")
     private Float successRequestLatencyAvg;
 

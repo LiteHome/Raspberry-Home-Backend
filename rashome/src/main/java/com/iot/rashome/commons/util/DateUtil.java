@@ -1,31 +1,40 @@
 package com.iot.rashome.commons.util;
 
-import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 
-import org.apache.commons.lang3.time.DateUtils;
+import com.iot.rashome.commons.exception.IotBackendException;
 
 public class DateUtil {
-    
-    /**
-     * 解析全部可能的日期格式
-     * @param stringDate
-     * @return
-     * @throws ParseException
-     */
-    public static Date parseInAllPossiableFormat(String stringDate) throws ParseException {
-        return DateUtils.parseDate(stringDate, 
-        "yyyy-MM-dd HH:mm:ss.SSS",
-        "yyyy-MM-dd HH:mm:ss", 
-        "yyyy-MM-dd HH:mm",
-        "yyyy-MM-dd HH",
-        "yyyy-MM-dd",
-        "yyyy-MM",
-        "yyyy");
+
+    private static final ZoneId SHANGHAI_ZONE_ID = ZoneId.of("Asia/Shanghai");
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:MM:SS.SSS");
+
+    private static final Long SEC_OR_MILLIS_THRESHOLD = 50L;
+
+    public static String parseFromTimeStamp(String timestamp) throws IotBackendException {
+
+        try {
+            Instant instant;
+            long timestampLong = Long.parseLong(timestamp);
+
+            // 检查 timestamp 是 毫秒 还是 秒
+            // 使用当前时间和入参比较, 如果相差在阈值内, 说明是毫秒;否则是秒
+            Long diff = Math.abs(System.currentTimeMillis() - timestampLong);
+            if (diff > SEC_OR_MILLIS_THRESHOLD * 1000) {
+                instant = Instant.ofEpochMilli(timestampLong);
+            } else {
+                instant = Instant.ofEpochSecond(timestampLong);
+            }
+
+            return ZonedDateTime.ofInstant(instant, SHANGHAI_ZONE_ID).format(FORMATTER);
+        } catch (NumberFormatException e) {
+            throw new IotBackendException("解析时间错误, String timestamp 无法解析", e);
+        }
     }
 
     /**
@@ -33,8 +42,10 @@ public class DateUtil {
      * @param targetDate
      * @return 秒数差别
      */
-    public static int dateDiffInSecond(Date targetDate) {
-        return Math.round((new Date().getTime() - targetDate.getTime()) / 1000);
+    public static Long dateDiffInSecond(String dateString) {
+        
+        Instant dateParsed = Instant.parse(dateString);
+        return ChronoUnit.SECONDS.between(dateParsed, Instant.now());
     }
 
     /**
@@ -44,9 +55,7 @@ public class DateUtil {
      */
     public static String getCurDateAndFormatted(DateTimeFormatter dateTimeFormatter) {
 
-        Instant nowUtc = Instant.now();
-        ZoneId asiaShanghaZoneId = ZoneId.of("Asia/Shanghai");
-        ZonedDateTime instantTime = ZonedDateTime.ofInstant(nowUtc, asiaShanghaZoneId);
+        ZonedDateTime instantTime = ZonedDateTime.ofInstant(Instant.now(), SHANGHAI_ZONE_ID);
 
         return instantTime.format(dateTimeFormatter);
     }

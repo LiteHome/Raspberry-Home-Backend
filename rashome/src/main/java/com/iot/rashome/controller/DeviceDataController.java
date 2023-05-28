@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.exception.IotBackendException;
+import com.iot.rashome.commons.util.DateUtil;
 import com.iot.rashome.service.DeviceDataService;
 import com.iot.rashome.service.DeviceService;
 import com.iot.rashome.service.ImageService;
@@ -56,11 +57,11 @@ public class DeviceDataController {
 
         // 参数检查
         if (
-            ObjectUtils.isEmpty(deviceDataVO) || 
-            ObjectUtils.isEmpty(deviceDataVO.getDeviceId()) ||
-            ObjectUtils.isEmpty(deviceDataVO.getCollectedDate())){
+            ObjectUtils.anyNull(deviceDataVO, deviceDataVO.getDeviceId()) ||
+            StringUtils.isBlank(deviceDataVO.getCollectedDate())){
             throw IotBackendException.nullParameters("设备数据 VO", "设备 ID, 数据收集时间");
         }
+        deviceDataVO.setCollectedDate(DateUtil.parseFromTimeStamp(deviceDataVO.getCollectedDate()));
         
         // 校验设备是否注册, 如果注册, 则 deviceVO 不为空
         DeviceVO deviceVO = deviceService.checkIfDeviceRegistByDeviceId(deviceDataVO.getDeviceId());
@@ -75,10 +76,7 @@ public class DeviceDataController {
 
         // 如果图片数据不为空, 则进行图片处理
         if (StringUtils.isNotBlank(deviceDataVO.getCameraImageBase64())) {
-
-            String imageUrl = imageService.imageToUrl(deviceDataVO);
-
-            deviceDataVO.setCameraImageUrl(imageUrl);
+            deviceDataVO.setCameraImageUrl(imageService.imageToUrl(deviceDataVO));
         }
 
         // 设备数据插入数据库

@@ -1,9 +1,5 @@
 package com.iot.rashome.vo;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -35,8 +31,7 @@ public class DeviceDataVO {
 
     @Temporal(TemporalType.DATE)
     @JsonProperty(value = "collected_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
-    private Date collectedDate;
+    private String collectedDate;
 
     @JsonProperty(value = "device_id")
     private Long deviceId;

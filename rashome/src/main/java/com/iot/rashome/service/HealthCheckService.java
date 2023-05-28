@@ -56,6 +56,7 @@ public class HealthCheckService {
                 
                 // 获取最新的传感器数据
                 DeviceDataVO latestDeviceData = deviceDataService.getLatestDeviceData(onlineDeviceVO.getId());
+                logger.info(latestDeviceData.toString());
 
                 // 没有数据, 说明设备还没有发数据, 设备下线
                 if (ObjectUtils.isEmpty(latestDeviceData)) {
@@ -65,9 +66,9 @@ public class HealthCheckService {
                 }
 
                 // 计算与当前的时间差
-                int dateDiffInSecond = DateUtil.dateDiffInSecond(latestDeviceData.getCollectedDate());
+                Long dateDiffInSecond = DateUtil.dateDiffInSecond(latestDeviceData.getCollectedDate());
                 // 大于阈值, 则更新传感器状态为失败
-                if (dateDiffInSecond > Integer.parseInt(onlineDeviceVO.getHealthCheckRate())) {
+                if (dateDiffInSecond > Long.parseLong(onlineDeviceVO.getHealthCheckRate())) {
                     onlineDeviceVO.setStatus(DeviceStatus.OFFLINE.name());
                     logger.info(String.format("%s 下线, 设备长时间没有发送数据", onlineDeviceVO.getDeviceName()));
                 }

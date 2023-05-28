@@ -29,7 +29,7 @@ public class DeviceDataVO {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(value = "collected_date")
     private String collectedDate;
 

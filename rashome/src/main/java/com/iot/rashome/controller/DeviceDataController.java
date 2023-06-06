@@ -24,11 +24,14 @@ import com.iot.rashome.service.ImageService;
 import com.iot.rashome.vo.DeviceDataVO;
 import com.iot.rashome.vo.DeviceVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 设备数据增加, 查询接口
  */
 @RestController
 @RequestMapping("/data")
+@Slf4j
 public class DeviceDataController {
 
     @Autowired
@@ -39,6 +42,8 @@ public class DeviceDataController {
 
     @Autowired
     private ImageService imageService;
+
+
 
     /**
      * 校验设备是否注册, 将设备数据插入数据库
@@ -71,7 +76,7 @@ public class DeviceDataController {
         // 更新设备状态
         deviceVO.setStatus(DeviceStatus.ONLINE.name());
         deviceService.updateDeviceVO(deviceVO);
-
+        log.info("更新设备状态 " + deviceVO.getId());
 
         // 如果图片数据不为空, 则进行图片处理
         if (StringUtils.isNotBlank(deviceDataVO.getCameraImageBase64())) {

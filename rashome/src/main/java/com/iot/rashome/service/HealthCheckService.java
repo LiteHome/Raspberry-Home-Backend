@@ -34,9 +34,9 @@ public class HealthCheckService {
     private static final Logger logger = LoggerFactory.getLogger(HealthCheckService.class);
     
     /**
-     * 定时健康检查任务, 固定频率为 1000ms * 60 = 一分钟
+     * 定时健康检查任务, 固定频率为 1000ms * 60 * 5 = 5分钟
      */
-    @Scheduled(fixedRate = 1000 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 5)
     public void healthCheck() {
 
         // 获取当前在线的设备

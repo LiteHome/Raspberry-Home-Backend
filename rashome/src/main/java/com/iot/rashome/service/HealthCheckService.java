@@ -56,7 +56,6 @@ public class HealthCheckService {
                 
                 // 获取最新的传感器数据
                 DeviceDataVO latestDeviceData = deviceDataService.getLatestDeviceData(onlineDeviceVO.getId());
-                logger.info(latestDeviceData.toString());
 
                 // 没有数据, 说明设备还没有发数据, 设备下线
                 if (ObjectUtils.isEmpty(latestDeviceData)) {

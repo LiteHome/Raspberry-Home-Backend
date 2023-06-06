@@ -1,9 +1,13 @@
 package com.iot.rashome.vo;
 
+import java.time.ZonedDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.iot.rashome.service.DateCustomDeserializer;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +35,8 @@ public class DeviceDataVO {
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(value = "collected_date")
-    private String collectedDate;
+    @JsonDeserialize(using = DateCustomDeserializer.class)
+    private ZonedDateTime collectedDate;
 
     @JsonProperty(value = "device_id")
     private Long deviceId;

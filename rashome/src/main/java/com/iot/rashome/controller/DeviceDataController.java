@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.exception.IotBackendException;
-import com.iot.rashome.commons.util.DateUtil;
 import com.iot.rashome.service.DeviceDataService;
 import com.iot.rashome.service.DeviceService;
 import com.iot.rashome.service.ImageService;
@@ -56,12 +55,12 @@ public class DeviceDataController {
     public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) throws IotBackendException, ParseException {
 
         // 参数检查
-        if (
-            ObjectUtils.anyNull(deviceDataVO, deviceDataVO.getDeviceId()) ||
-            StringUtils.isBlank(deviceDataVO.getCollectedDate())){
+        if (ObjectUtils.anyNull(
+            deviceDataVO, 
+            deviceDataVO.getDeviceId(), 
+            deviceDataVO.getCollectedDate())) {
             throw IotBackendException.nullParameters("设备数据 VO", "设备 ID, 数据收集时间");
         }
-        deviceDataVO.setCollectedDate(DateUtil.parseFromTimeStamp(deviceDataVO.getCollectedDate()));
         
         // 校验设备是否注册, 如果注册, 则 deviceVO 不为空
         DeviceVO deviceVO = deviceService.checkIfDeviceRegistByDeviceId(deviceDataVO.getDeviceId());

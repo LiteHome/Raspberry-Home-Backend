@@ -1,19 +1,21 @@
 package com.iot.rashome.vo;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.apache.commons.lang3.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.iot.rashome.commons.enums.DeviceStatus;
+import com.iot.rashome.commons.util.DateUtil;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -28,34 +30,36 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "device")
 @JsonIgnoreProperties({"createdBy", "creationDate", "updatedBy", "updatedDate"})
+// todo : 解决默认值的问题
 public class DeviceVO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long id;
 
-    public String createdBy = "SYSTEM";
+    @Column(updatable = false, insertable = false)
+    public String createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @Column(updatable = false)
-    public Date creationDate;
+    @Column(updatable = false, insertable = false)
+    public ZonedDateTime creationDate;
 
-    public String updatedBy = "SYSTEM";
+    @Column(insertable = false)
+    public String updatedBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    public Date updatedDate;
+    @Column(insertable = false)
+    public ZonedDateTime updatedDate;
 
     // 默认值是下线
-    private String status = DeviceStatus.ONLINE.name();
+    @Column(insertable = false)
+    private String status;
 
     @JsonProperty(value = "health_check_url")
     private String healthCheckUrl;
 
-    // 默认值是 30s
     @JsonProperty(value = "health_check_rate")
-    private String healthCheckRate = "30";
+    private String healthCheckRate;
 
     @JsonProperty(value = "device_name")
     private String deviceName;
@@ -64,6 +68,7 @@ public class DeviceVO {
     private String deviceInformation;
 
     @JsonProperty(value = "device_uuid")
+    @Column(updatable = false)
     private String deviceUuid;
 
     @JsonProperty(value = "parent_uuid")
@@ -74,4 +79,19 @@ public class DeviceVO {
 
     @JsonProperty(value = "device_tag")
     private String deviceTag;
+
+    @PrePersist
+    @PreUpdate
+    private void defaultValue() {
+
+        updatedBy = setIfNull(updatedBy, "SYSTEM");
+        updatedDate = setIfNull(updatedDate, DateUtil.getCurDate());
+        status = setIfNull(status, DeviceStatus.OFFLINE.name());
+        healthCheckRate = setIfNull(healthCheckRate, "30");
+
+    }
+
+    private <T> T setIfNull(T object, T value) {
+        return ObjectUtils.isEmpty(object) ? value : object;
+    }
 }

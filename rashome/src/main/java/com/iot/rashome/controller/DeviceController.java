@@ -59,7 +59,7 @@ public class DeviceController {
                 deviceVO.setGatewayUuid(deviceGatewayUuidString);
                 deviceVO.setDeviceTag(deviceTagString);
             } else {
-                throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid, Device Parent Uuid, Gateway Uuid");
+                throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid, Device Parent Uuid, Gateway Uuid, Device tag");
             }
         }
     }
@@ -95,14 +95,13 @@ public class DeviceController {
 
         // 检查设备是否注册
         DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
-        if (ObjectUtils.isNotEmpty(databaseDeviceVO)) {
-            deviceVO.setId(databaseDeviceVO.getId());
+        // 未注册则注册并返回
+        if (ObjectUtils.isEmpty(databaseDeviceVO)) {
+            return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(deviceService.saveDevice(deviceVO)));
         }
 
-        // 没有注册的设备在这一步注册
-        DeviceVO updatedDeviceVO = deviceService.updateDeviceVO(deviceVO);
-
-        return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(updatedDeviceVO));
+        deviceVO.setId(databaseDeviceVO.getId());
+        return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(deviceService.updateDeviceVO(deviceVO)));
     }
 
 }

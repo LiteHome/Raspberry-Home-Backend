@@ -80,4 +80,14 @@ public class DateUtil {
 
         return instantTime.format(dateTimeFormatter);
     }
+
+    /**
+     * 获取当前时间
+     * @param dateTimeFormatter
+     * @return
+     */
+    public static ZonedDateTime getCurDate() {
+
+        return ZonedDateTime.ofInstant(Instant.now(), SHANGHAI_ZONE_ID);
+    }
 }

@@ -64,6 +64,7 @@ public class DeviceDataController {
             deviceDataVO, 
             deviceDataVO.getDeviceId(), 
             deviceDataVO.getCollectedDate())) {
+            log.info(String.format("收到的数据是 %s", deviceDataVO));
             throw IotBackendException.nullParameters("设备数据 VO", "设备 ID, 数据收集时间");
         }
         

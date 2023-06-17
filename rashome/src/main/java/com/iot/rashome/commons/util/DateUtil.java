@@ -14,7 +14,7 @@ public class DateUtil {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS.SSS");
 
-    private static final Long SEC_OR_MILLIS_THRESHOLD = 5L * 1000; // 5 秒内
+    private static final Long SEC_OR_MILLIS_THRESHOLD = 15L * 1000; // 15 秒内
 
     public static String parseFromTimeStamp(String timestamp) throws IotBackendException {
 

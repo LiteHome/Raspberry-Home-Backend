@@ -50,7 +50,6 @@ public class DeviceDataController {
      * @param deviceDataVO 设备数据 VO
      * @throws IotBackendException
      */
-    // todo: 时间序列化应该在应用层处理, 增加兜底逻辑
     @Transactional(
         propagation = Propagation.REQUIRED,
         isolation = Isolation.READ_COMMITTED,
@@ -64,7 +63,7 @@ public class DeviceDataController {
             deviceDataVO, 
             deviceDataVO.getDeviceId(), 
             deviceDataVO.getCollectedDate())) {
-            log.info(String.format("收到的数据是 %s", deviceDataVO));
+            log.warn(String.format("收到的数据是 %s", deviceDataVO));
             throw IotBackendException.nullParameters("设备数据 VO", "设备 ID, 数据收集时间");
         }
         

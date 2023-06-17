@@ -48,6 +48,15 @@ public class DeviceDataVO {
     @JsonProperty(value = "cpu_usage")
     private String cpuUsage;
 
+    @JsonProperty(value = "memory_usage")
+    private String memoryUsage;
+
+    @JsonProperty(value = "disk_usage")
+    private String diskUsage;
+
+    @JsonProperty(value = "network_usage")
+    private String networkUsage;
+
     @JsonProperty(value = "success_request_latency_avg")
     private Float successRequestLatencyAvg;
 

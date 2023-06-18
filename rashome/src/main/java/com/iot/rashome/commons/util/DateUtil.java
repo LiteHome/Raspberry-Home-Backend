@@ -14,49 +14,32 @@ public class DateUtil {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS.SSS");
 
-    private static final Long SEC_OR_MILLIS_THRESHOLD = 15L * 1000; // 15 秒内
-
     public static String parseFromTimeStamp(String timestamp) throws IotBackendException {
 
         try {
-            Instant instant;
             long timestampLong = Long.parseLong(timestamp);
-
-            // 检查 timestamp 是 毫秒 还是 秒
-            // 使用当前时间和入参比较, 如果相差在阈值内, 说明是毫秒;否则是秒
-            Long diff = Math.abs(System.currentTimeMillis() - timestampLong);
-            if (diff < SEC_OR_MILLIS_THRESHOLD * 1000) {
-                instant = Instant.ofEpochMilli(timestampLong);
-            } else {
-                instant = Instant.ofEpochSecond(timestampLong);
-            }
-
+            Instant instant = Instant.ofEpochMilli(timestampLong);
 
             return ZonedDateTime.ofInstant(instant, SHANGHAI_ZONE_ID).format(FORMATTER);
         } catch (NumberFormatException e) {
-            throw new IotBackendException("解析时间错误, String timestamp 无法解析", e);
+            throw new IotBackendException(String.format("无法解析 %s 时间戳", timestamp), e);
         }
     }
 
+    /***
+     * Long 时间戳转换为中国上海时间, 要求传入的时间戳是毫秒单位
+     * @param unixTimestamp
+     * @return
+     * @throws IotBackendException
+     */
     public static ZonedDateTime parseFromTimeStampToZonedDateTime(Long unixTimestamp) throws IotBackendException {
 
         try {
-            Instant instant;
-
-            // 检查 timestamp 是 毫秒 还是 秒
-            // 使用当前时间和入参比较, 如果相差在阈值(ms)内, 说明是毫秒;否则是秒
-            Long diff = System.currentTimeMillis() - unixTimestamp;
-            if (diff < 0) {
-                throw new IotBackendException("下游传输时间戳带了时区偏移");
-            } else if (diff < SEC_OR_MILLIS_THRESHOLD) {
-                instant = Instant.ofEpochMilli(unixTimestamp);
-            } else {
-                instant = Instant.ofEpochSecond(unixTimestamp);
-            }
+            Instant instant = Instant.ofEpochMilli(unixTimestamp);
 
             return ZonedDateTime.ofInstant(instant, SHANGHAI_ZONE_ID);
         } catch (NumberFormatException e) {
-            throw new IotBackendException("解析时间错误, String timestamp 无法解析", e);
+            throw new IotBackendException(String.format("无法解析 %s 时间戳", unixTimestamp), e);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.iot.rashome.service;
+package com.iot.rashome.converter;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -15,16 +15,16 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.commons.util.DateUtil;
 
-@Service
-public class DateCustomDeserializer extends StdDeserializer<ZonedDateTime> {
+@Component
+public class StringDateDeserializer extends StdDeserializer<ZonedDateTime> {
 
-    private static final Logger logger = LoggerFactory.getLogger(DateCustomDeserializer.class);
+    private static final Logger logger = LoggerFactory.getLogger(StringDateDeserializer.class);
 
-    public DateCustomDeserializer() {
+    public StringDateDeserializer() {
         this(null);
     }
 
-    public DateCustomDeserializer(Class<?> src) {
+    public StringDateDeserializer(Class<?> src) {
         super(src);
     }
 

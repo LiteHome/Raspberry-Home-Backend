@@ -1,14 +1,17 @@
 package com.iot.rashome.vo;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.iot.rashome.service.DateCustomDeserializer;
+import com.iot.rashome.converter.ListFloatConverter;
+import com.iot.rashome.converter.StringDateDeserializer;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,7 +38,7 @@ public class DeviceDataVO {
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(value = "collected_date")
-    @JsonDeserialize(using = DateCustomDeserializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
     private ZonedDateTime collectedDate;
 
     @JsonProperty(value = "device_id")
@@ -46,16 +49,20 @@ public class DeviceDataVO {
     private Float humidity;
 
     @JsonProperty(value = "cpu_usage")
-    private String cpuUsage;
+    @Convert(converter = ListFloatConverter.class)
+    private List<Float> cpuUsage;
 
     @JsonProperty(value = "memory_usage")
-    private String memoryUsage;
+    @Convert(converter = ListFloatConverter.class)
+    private List<Float> memoryUsage;
 
     @JsonProperty(value = "disk_usage")
-    private String diskUsage;
+    @Convert(converter = ListFloatConverter.class)
+    private List<Float> diskUsage;
 
     @JsonProperty(value = "network_usage")
-    private String networkUsage;
+    @Convert(converter = ListFloatConverter.class)
+    private List<Float> networkUsage;
 
     @JsonProperty(value = "success_request_latency_avg")
     private Float successRequestLatencyAvg;

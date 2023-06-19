@@ -17,20 +17,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ListFloatConverter implements AttributeConverter<List<Float>, String> {
 
-    private static final String EMPTY_LIST_JSON_STRING = "[]";
-
     @Override
     public String convertToDatabaseColumn(List<Float> attribute) {
 
         if (CollectionUtils.isEmpty(attribute)) {
-            return EMPTY_LIST_JSON_STRING;
+            return null;
         }
 
         try {
             return JsonUtil.toJsonString(attribute);
         } catch (IotBackendException e) {
             log.error(String.format("无法序列化 %s", attribute), e);
-            return EMPTY_LIST_JSON_STRING;
+            return null;
         }
     }
 

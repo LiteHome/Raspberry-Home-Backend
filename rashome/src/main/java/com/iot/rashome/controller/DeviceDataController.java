@@ -99,7 +99,7 @@ public class DeviceDataController {
 
         // 参数检查
         if(StringUtils.isBlank(deviceName)){
-            throw IotBackendException.nullParameters("设备别名");
+            throw IotBackendException.nullParameters("设备名称");
         }
 
         // 根据设备名称查找设备
@@ -109,7 +109,7 @@ public class DeviceDataController {
             // 找不到设备说明没有注册
             throw IotBackendException.deviceIsNotRegist();
         } else if (deviceVO.getStatus().equals(DeviceStatus.OFFLINE.name())) {
-            // 设备下线
+            // 设备已下线
             throw IotBackendException.parametersInMessage("%s 下线", deviceName);
         }
 

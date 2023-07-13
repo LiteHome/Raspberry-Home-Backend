@@ -1,5 +1,6 @@
 package com.iot.rashome.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -39,7 +40,7 @@ public class DeviceController {
      * @param deviceVOList 注册设备 VO
      * @throws IotBackendException
      */
-    private void checkAndTrimRegistDeviceDTO(DeviceVO  ...deviceVOList) throws IotBackendException{
+    private void checkAndTrimRegistDeviceDTO(DeviceVO  ...deviceVOList) throws IotBackendException {
 
         for (DeviceVO deviceVO : deviceVOList) {
 
@@ -60,6 +61,28 @@ public class DeviceController {
                 deviceVO.setDeviceTag(deviceTagString);
             } else {
                 throw IotBackendException.nullParameters("DeviceInformation, DeviceUuid, Device Parent Uuid, Gateway Uuid, Device tag");
+            }
+        }
+    }
+
+        /**
+     * 参数校验并清理 RegistDeviceDTO 中字符串的空格
+     * @param deviceVOList 注册设备 VO
+     * @throws IotBackendException
+     */
+    private void checkAndTrimSetDevicesNameDeviceDTO(List<DeviceVO> deviceVOList) throws IotBackendException {
+
+        for (DeviceVO deviceVO : deviceVOList) {
+            // 清理空格
+            String deviceUuidString = StringUtils.trimToEmpty(deviceVO.getDeviceUuid());
+            String deviceName = StringUtils.trimToEmpty(deviceVO.getDeviceName());
+
+            // 校验参数是否为空
+            if (StringUtils.isNoneEmpty(deviceUuidString, deviceName)) {
+                deviceVO.setDeviceUuid(deviceUuidString);
+                deviceVO.setDeviceName(deviceName);
+            } else {
+                throw IotBackendException.nullParameters("DeviceUuid, DeviceName");
             }
         }
     }
@@ -102,6 +125,32 @@ public class DeviceController {
 
         deviceVO.setId(databaseDeviceVO.getId());
         return ResultDTO.success(OBJECT_MAPPER.writeValueAsString(deviceService.updateDeviceVO(deviceVO)));
+    }
+
+    @PostMapping("/setDevicesName")
+    public ResultDTO setDevicesName(@RequestBody List<DeviceVO> deviceVOList) throws IotBackendException {
+
+        checkAndTrimSetDevicesNameDeviceDTO(deviceVOList);
+
+        List<DeviceVO> updatedDeviceVOList = new ArrayList<DeviceVO>(20);
+
+        for (DeviceVO deviceVO : deviceVOList) {
+            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
+
+            if (ObjectUtils.isEmpty(databaseDeviceVO)) {
+                throw new IotBackendException("设备未注册, uuid 是 " + deviceVO.getDeviceUuid());
+            }
+
+            if (!ObjectUtils.isEmpty(deviceService.checkIfDeviceRegistByDeviceName(deviceVO.getDeviceName()))) {
+                throw new IotBackendException("设备名字重复, 名字是 " + deviceVO.getDeviceName());
+            }
+
+            databaseDeviceVO.setDeviceName(deviceVO.getDeviceName());
+            updatedDeviceVOList.add(databaseDeviceVO);
+        }
+
+        deviceService.updateDeviceVO(updatedDeviceVOList);
+        return ResultDTO.success("成功");
     }
 
 }

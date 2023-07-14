@@ -1,6 +1,6 @@
 package com.iot.rashome.controller;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -128,28 +128,22 @@ public class DeviceController {
     }
 
     @PostMapping("/setDevicesName")
-    public ResultDTO setDevicesName(@RequestBody List<DeviceVO> deviceVOList) throws IotBackendException {
+    public ResultDTO setDevicesName(@RequestBody DeviceVO deviceVO) throws IotBackendException {
 
-        checkAndTrimSetDevicesNameDeviceDTO(deviceVOList);
+        checkAndTrimSetDevicesNameDeviceDTO(Collections.singletonList(deviceVO));
 
-        List<DeviceVO> updatedDeviceVOList = new ArrayList<DeviceVO>(20);
+        DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
 
-        for (DeviceVO deviceVO : deviceVOList) {
-            DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
-
-            if (ObjectUtils.isEmpty(databaseDeviceVO)) {
-                throw new IotBackendException("设备未注册, uuid 是 " + deviceVO.getDeviceUuid());
-            }
-
-            if (!ObjectUtils.isEmpty(deviceService.checkIfDeviceRegistByDeviceName(deviceVO.getDeviceName()))) {
-                throw new IotBackendException("设备名字重复, 名字是 " + deviceVO.getDeviceName());
-            }
-
-            databaseDeviceVO.setDeviceName(deviceVO.getDeviceName());
-            updatedDeviceVOList.add(databaseDeviceVO);
+        if (ObjectUtils.isEmpty(databaseDeviceVO)) {
+            throw new IotBackendException("设备未注册, uuid 是 " + deviceVO.getDeviceUuid());
         }
 
-        deviceService.updateDeviceVO(updatedDeviceVOList);
+        if (!ObjectUtils.isEmpty(deviceService.checkIfDeviceRegistByDeviceName(deviceVO.getDeviceName()))) {
+            throw new IotBackendException("设备名字重复, 名字是 " + deviceVO.getDeviceName());
+        }
+
+        databaseDeviceVO.setDeviceName(deviceVO.getDeviceName());
+        deviceService.updateDeviceVO(databaseDeviceVO);
         return ResultDTO.success("成功");
     }
 

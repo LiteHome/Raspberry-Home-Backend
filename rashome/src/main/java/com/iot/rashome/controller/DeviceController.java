@@ -1,5 +1,6 @@
 package com.iot.rashome.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -132,19 +133,69 @@ public class DeviceController {
 
         checkAndTrimSetDevicesNameDeviceDTO(Collections.singletonList(deviceVO));
 
-        DeviceVO databaseDeviceVO = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
-
-        if (ObjectUtils.isEmpty(databaseDeviceVO)) {
+        // 检查设备是否注册
+        DeviceVO databaseDeviceVOByUuid = deviceService.checkIfDeviceRegistByDeviceUuid(deviceVO.getDeviceUuid());
+        if (ObjectUtils.isEmpty(databaseDeviceVOByUuid)) {
             throw new IotBackendException("设备未注册, uuid 是 " + deviceVO.getDeviceUuid());
         }
 
-        if (!ObjectUtils.isEmpty(deviceService.checkIfDeviceRegistByDeviceName(deviceVO.getDeviceName()))) {
+        // 检查设备名称是否注册, 需要排除本设备, 即 uuid 相同的
+        DeviceVO databaseDeviceVOByName = deviceService.checkIfDeviceRegistByDeviceName(deviceVO.getDeviceName());
+        if (!ObjectUtils.isEmpty(databaseDeviceVOByName) && databaseDeviceVOByName.getDeviceUuid() != deviceVO.getDeviceUuid()) {
             throw new IotBackendException("设备名字重复, 名字是 " + deviceVO.getDeviceName());
         }
 
-        databaseDeviceVO.setDeviceName(deviceVO.getDeviceName());
-        deviceService.updateDeviceVO(databaseDeviceVO);
+        databaseDeviceVOByUuid.setDeviceName(deviceVO.getDeviceName());
+        deviceService.updateDeviceVO(databaseDeviceVOByUuid);
         return ResultDTO.success("成功");
+    }
+
+    @GetMapping("/getAllGateways")
+    public List<DeviceVO> getAllGateways() throws IotBackendException {
+
+        List<DeviceVO> result = new ArrayList<>(50);
+
+        List<DeviceVO> allOnlineDevices = deviceService.getAllOnlineDevices();
+        for (DeviceVO deviceVO : allOnlineDevices) {
+            // 网关没有级联关系, 所以三个 uuid 一样. 网关没有传感器
+            if (deviceVO.getDeviceUuid().equals(deviceVO.getParentUuid()) && deviceVO.getParentUuid().equals(deviceVO.getGatewayUuid())) {
+                result.add(deviceVO);
+            }
+        }
+
+        return result;
+    }
+
+    @GetMapping("/getAllBoards")
+    public List<DeviceVO> getAllBoards() throws IotBackendException {
+
+        List<DeviceVO> result = new ArrayList<>(50);
+
+        List<DeviceVO> allOnlineDevices = deviceService.getAllOnlineDevices();
+        for (DeviceVO deviceVO : allOnlineDevices) {
+            // 设备可以关联多个传感器, 但是只能关联一个网关
+            if (deviceVO.getDeviceUuid().equals(deviceVO.getParentUuid()) && !deviceVO.getParentUuid().equals(deviceVO.getGatewayUuid())) {
+                result.add(deviceVO);
+            }
+        }
+
+        return result;
+    }
+
+    @GetMapping("/getAllSensors")
+    public List<DeviceVO> getAllSensors() throws IotBackendException {
+
+        List<DeviceVO> result = new ArrayList<>(50);
+
+        List<DeviceVO> allOnlineDevices = deviceService.getAllOnlineDevices();
+        for (DeviceVO deviceVO : allOnlineDevices) {
+            // 传感器只能关联一个设备和网关
+            if (!deviceVO.getDeviceUuid().equals(deviceVO.getParentUuid()) && !deviceVO.getParentUuid().equals(deviceVO.getGatewayUuid())) {
+                result.add(deviceVO);
+            }
+        }
+
+        return result;
     }
 
 }

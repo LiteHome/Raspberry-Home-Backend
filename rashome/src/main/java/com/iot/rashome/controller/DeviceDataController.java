@@ -96,9 +96,6 @@ public class DeviceDataController {
     @GetMapping("/")
     public DeviceDataVO getDeviceData(@RequestParam String deviceName) throws UnsupportedEncodingException, IotBackendException {
 
-
-        // todo: 思考报表怎么查询和展示
-
         // 参数检查
         if(StringUtils.isBlank(deviceName)){
             throw IotBackendException.nullParameters("设备名称");

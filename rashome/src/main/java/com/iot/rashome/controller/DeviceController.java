@@ -92,9 +92,18 @@ public class DeviceController {
      * 查询全部设备
      * @return List<DeviceVO> 全部设备VO
      */
-    @GetMapping("/")
+    @GetMapping("/getAllDevices")
     public List<DeviceVO> getDevices(){
         return deviceService.getAllDevices();
+    }
+
+    /**
+     * 查询全部设备
+     * @return List<DeviceVO> 全部设备VO
+     */
+    @GetMapping("/getAllOnlineDevices")
+    public List<DeviceVO> getOnlineDevices(){
+        return deviceService.getAllOnlineDevices();
     }
 
     /**

@@ -55,7 +55,7 @@ public class DeviceDataController {
         isolation = Isolation.READ_COMMITTED,
         timeout = 10
     )
-    @PostMapping("/")
+    @PostMapping("/add")
     public void addDeviceData(@RequestBody DeviceDataVO deviceDataVO) throws IotBackendException, ParseException {
 
         // 参数检查
@@ -93,8 +93,8 @@ public class DeviceDataController {
      * @return 设备数据
      * @throws UnsupportedEncodingException
      */
-    @GetMapping("/")
-    public DeviceDataVO getDeviceData(@RequestParam String deviceName) throws UnsupportedEncodingException, IotBackendException {
+    @GetMapping("/getByName")
+    public DeviceDataVO getDeviceDataByName(@RequestParam String deviceName) throws UnsupportedEncodingException, IotBackendException {
 
         // 参数检查
         if(StringUtils.isBlank(deviceName)){
@@ -114,6 +114,35 @@ public class DeviceDataController {
 
         // 获取设备数据
         return deviceDataService.getLatestDeviceData(deviceVO.getId());
+    }
+
+    /**
+     * 根据设备ID查询设备数据.
+     * @param deviceId 设备名称, UTF-8
+     * @return 设备数据
+     * @throws UnsupportedEncodingException
+     */
+    @GetMapping("/getById")
+    public DeviceDataVO getDeviceDataByName(@RequestParam Long deviceId) throws UnsupportedEncodingException, IotBackendException {
+
+        // 参数检查
+        if(ObjectUtils.isEmpty(deviceId)){
+            throw IotBackendException.nullParameters("设备ID");
+        }
+
+        // 根据设备名称查找设备
+        DeviceVO deviceVO = deviceService.checkIfDeviceRegistByDeviceId(deviceId);
+
+        if (ObjectUtils.isEmpty(deviceVO)) {
+            // 找不到设备说明没有注册
+            throw IotBackendException.deviceIsNotRegist();
+        } else if (deviceVO.getStatus().equals(DeviceStatus.OFFLINE.name())) {
+            // 设备已下线
+            throw IotBackendException.parametersInMessage("%s 下线", deviceId);
+        }
+
+        // 获取设备数据
+        return deviceDataService.getLatestDeviceData(deviceId);
     }
 
 }

@@ -116,6 +116,13 @@
 			<artifactId>imgscalr-lib</artifactId>
 			<version>4.2</version>
 		</dependency>
+		<!-- paho mqtt client-->
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			  <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			  <version>1.2.5</version>
+		  </dependency>		  
+		<!-- paho mqtt client-->
 	</dependencies>
 
 	<build>

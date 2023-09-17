@@ -19,7 +19,7 @@ public class ListFloatConverter implements AttributeConverter<List<Float>, Strin
 
     @Override
     public String convertToDatabaseColumn(List<Float> attribute) {
-
+        // 存储到数据库的时候, 转换为 json string
         if (CollectionUtils.isEmpty(attribute)) {
             return null;
         }
@@ -34,11 +34,10 @@ public class ListFloatConverter implements AttributeConverter<List<Float>, Strin
 
     @Override
     public List<Float> convertToEntityAttribute(String dbData) {
-
+        // 数据库取出来的时候, 转换为 list<float>
         if (StringUtils.isBlank(dbData)) {
             return new ArrayList<Float>();
         }
-
         try {
             return JsonUtil.stringToArrayObject(dbData, Float.class);
         } catch (IotBackendException e) {

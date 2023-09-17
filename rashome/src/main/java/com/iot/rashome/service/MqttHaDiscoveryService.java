@@ -7,37 +7,32 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.iot.rashome.commons.enums.DeviceStatus;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.commons.util.JsonUtil;
 import com.iot.rashome.dto.MqttSensorDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class MqttHaDiscoveryService {
-    @Value("${mqtt.host}")
-    private String mqttHost;
-
-    @Value("${mqtt.username}")
-    private String mqttUsername;
-
-    @Value("${mqtt.password}")
-    private String mqttPassword;
-
     @Value("${mqtt.ha.discovery.topic.prefix}")
     private String mqttTopicPrefix;
 
     private MqttClient client;
 
-    private static final Logger logger = LoggerFactory.getLogger(MqttHaDiscoveryService.class);
-
-    public MqttHaDiscoveryService() throws IotBackendException {
-
+    public MqttHaDiscoveryService(
+        @Value("${mqtt.host}")String mqttHost,
+        @Value("${mqtt.username}") String mqttUsername,
+        @Value("${mqtt.password}") String mqttPassword) 
+        throws IotBackendException {
+        // 内存存储
         MemoryPersistence persistence = new MemoryPersistence();
-
+        // 连接服务器
         try {
             this.client = new MqttClient(
                 mqttHost, 
@@ -64,12 +59,21 @@ public class MqttHaDiscoveryService {
         }
     }
 
+    // todo: mqtt 默认配置抽成一个类
     public void sendMessage(MqttSensorDTO mqttSensorDTO) {
         // https://www.home-assistant.io/integrations/mqtt/
 
-        String configTopic = String.format("%s/sensor/%s/config", mqttTopicPrefix, mqttSensorDTO.getUniqueId());
-        String stateTopic = String.format("%s/sensor/%s/state", mqttTopicPrefix, mqttSensorDTO.getUniqueId());
+        String commonTopicPrefix = String.format("%s/sensor/%s", mqttTopicPrefix, mqttSensorDTO.getUniqueId());
+
+        String configTopic = commonTopicPrefix + "/config";
+        String stateTopic = commonTopicPrefix + "/state";
+        String availabilityTopic = commonTopicPrefix + "/availability";
         mqttSensorDTO.setStateTopic(stateTopic);
+        mqttSensorDTO.setAvailabilityTopic(availabilityTopic);
+        mqttSensorDTO.setPayloadAvailable(DeviceStatus.ONLINE.name());
+        mqttSensorDTO.setPayloadNotAvailable(DeviceStatus.OFFLINE.name());
+        mqttSensorDTO.setValueTemplate("{{value}}");
+
 
         String payloadString;
         MqttMessage message;
@@ -78,14 +82,14 @@ public class MqttHaDiscoveryService {
             message = new MqttMessage(payloadString.getBytes());
             message.setQos(1);
         } catch (IotBackendException e) {
-            logger.warn("mqtt 消息序列化失败", e);
+            log.warn("mqtt 消息序列化失败", e);
             return;
         }
 
         try {
             client.publish(configTopic, message);
         } catch (MqttException e) {
-            logger.warn("mqtt 消息发送失败", new IotBackendException(e));
+            log.warn("mqtt 消息发送失败", new IotBackendException(e));
         }
     }
 }

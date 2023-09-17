@@ -39,6 +39,7 @@ public class DeviceDataVO {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(value = "collected_date")
     @JsonDeserialize(using = StringDateDeserializer.class)
+    // 前端传入是 long timestamp(单位 ms), deserializer 转为 ZoneDateTime
     private ZonedDateTime collectedDate;
 
     @JsonProperty(value = "device_id")
@@ -50,18 +51,22 @@ public class DeviceDataVO {
 
     @JsonProperty(value = "cpu_usage")
     @Convert(converter = ListFloatConverter.class)
+    // 存储到数据库, 以及数据库取出的时候自动转换
     private List<Float> cpuUsage;
 
     @JsonProperty(value = "memory_usage")
     @Convert(converter = ListFloatConverter.class)
+    // 存储到数据库, 以及数据库取出的时候自动转换
     private List<Float> memoryUsage;
 
     @JsonProperty(value = "disk_usage")
     @Convert(converter = ListFloatConverter.class)
+    // 存储到数据库, 以及数据库取出的时候自动转换
     private List<Float> diskUsage;
 
     @JsonProperty(value = "network_usage")
     @Convert(converter = ListFloatConverter.class)
+    // 存储到数据库, 以及数据库取出的时候自动转换
     private List<Float> networkUsage;
 
     @JsonProperty(value = "success_request_latency_avg")

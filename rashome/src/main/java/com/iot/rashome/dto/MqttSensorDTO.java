@@ -25,6 +25,18 @@ public class MqttSensorDTO {
     @JsonProperty("value_template")
     private String valueTemplate; // 格式形如 {{<模板>}}
 
+    @JsonProperty("availability_topic")
+    private String availabilityTopic;
+
+    @JsonProperty("payload_available")
+    private String payloadAvailable;
+
+    @JsonProperty("payload_not_available")
+    private String payloadNotAvailable;
+
+    @JsonProperty("availability_template")
+    private String availabilityTemplate;
+
     @AllArgsConstructor
     @Data
     static class Device {

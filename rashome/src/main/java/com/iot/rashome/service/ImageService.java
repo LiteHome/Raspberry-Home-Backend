@@ -21,7 +21,6 @@ import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 import com.iot.rashome.commons.exception.IotBackendException;
 import com.iot.rashome.commons.util.DateUtil;
-import com.iot.rashome.vo.DeviceDataVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,14 +53,14 @@ public class ImageService {
     }
 
 
-    public String imageToUrl(DeviceDataVO deviceDataVO) throws IotBackendException {
+    public String imageToUrl(Long deviceId, String imageBase64String) throws IotBackendException {
         // 判断 webdav client 是否初始化
         if (ObjectUtils.isEmpty(sardine)) {
             throw new IotBackendException("web dav 客户端没有初始化");
         }
         // 创建目录, 形如 /tmp/{deviceId}/{yyyy-mm-dd}
         String targetDirectory = DIRECTORY_FORMATER.formatted(
-            deviceDataVO.getDeviceId(), 
+            deviceId, 
             DateUtil.getCurDate());
         try {
             this.createDirectoryWithWebDavUlr(this.webDavUrl, targetDirectory);
@@ -75,7 +74,7 @@ public class ImageService {
         // 缩放图片
         byte[] imageBytesArray;
         try {
-            imageBytesArray = resizeImageFromBase64String(deviceDataVO.getCameraImageBase64());
+            imageBytesArray = resizeImageFromBase64String(imageBase64String);
         } catch (IotBackendException e) {
             throw new IotBackendException("图片转换失败", e);
         }

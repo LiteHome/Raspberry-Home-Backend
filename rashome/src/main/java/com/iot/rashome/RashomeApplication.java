@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EntityScan("com.iot.rashome.vo")
 @EnableScheduling
 @EnableTransactionManagement
 public class RashomeApplication {

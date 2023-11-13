@@ -30,30 +30,29 @@ public class MqttHaDiscoveryService {
         @Value("${mqtt.username}") String mqttUsername,
         @Value("${mqtt.password}") String mqttPassword) 
         throws IotBackendException {
-        // 内存存储
+        // 使用内存存储
         MemoryPersistence persistence = new MemoryPersistence();
         // 连接服务器
         try {
             this.client = new MqttClient(
                 mqttHost, 
-                UUID.randomUUID().toString() + "-backend", 
+                UUID.randomUUID() + "-backend",
                 persistence);
 
-            // MQTT connection option
+            // 设置连接选项
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setUserName(mqttUsername);
             connOpts.setPassword(mqttPassword.toCharArray());
             // retain session
             connOpts.setCleanSession(true);
 
-            // establish a connection
-            System.out.println("正在连接 MQTT Broker: " + mqttHost);
+            // 创建连接
+            log.info("正在连接 MQTT Broker: " + mqttHost);
             client.connect(connOpts);
+            log.info("连接成功");
 
-            System.out.println("连接成功");
-
-            client.disconnect();
-            client.close();
+//            client.disconnect();
+//            client.close();
         } catch (MqttException e) {
             throw new IotBackendException("Mqtt 连接失败", e);
         }
